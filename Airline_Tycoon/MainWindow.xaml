@@ -21,7 +21,7 @@
             <Setter Property="BorderThickness"
                     Value="0" />
             <Setter Property="Width"
-                    Value="80" />
+                    Value="100" />
             <Setter Property="Height"
                     Value="80" />
             <Setter Property="Padding"
@@ -88,11 +88,7 @@
                             HorizontalAlignment="Center"
                             Margin="0 0 0 20">
 
-                    <Button Width="80"
-                            Height="80"
-                            Background="#272727"
-                            BorderThickness="0"
-                            Padding="0"
+                    <Button Style="{StaticResource MenuButton}"
                             Margin="0, 0, 40, 0">
 
                         <StackPanel Orientation="Vertical"
@@ -110,11 +106,7 @@
                         </StackPanel>
                     </Button>
 
-                    <Button Width="80"
-                            Height="80"
-                            Background="#272727"
-                            BorderThickness="0"
-                            Padding="0"
+                    <Button Style="{StaticResource MenuButton}"
                             Margin="0, 0, 40, 0">
 
                         <StackPanel Orientation="Vertical"
@@ -132,11 +124,7 @@
                         </StackPanel>
                     </Button>
 
-                    <Button Width="80"
-                            Height="80"
-                            Background="#272727"
-                            BorderThickness="0"
-                            Padding="0">
+                    <Button Style="{StaticResource MenuButton}">
 
                         <StackPanel Orientation="Vertical"
                                     VerticalAlignment="Center">
