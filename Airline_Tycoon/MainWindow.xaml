@@ -64,13 +64,72 @@
             <!-- Zone principale à gauche -->
             <ColumnDefinition Width="*" />
             <!-- Bandeau droit : environ 1/3 -->
-            <ColumnDefinition Width="0.4*"
+            <ColumnDefinition Width="0.44*"
                               MinWidth="200" />
         </Grid.ColumnDefinitions>
 
-        <!-- Panneau gauche (fond blanc) -->
+        <!-- Panneau gauche (carte du monde) -->
+
         <Border Grid.Column="0"
-                Background="White" />
+                Background="Black">
+            <Grid>
+                <Image Source="/img/world_map.jpg"
+                       Stretch="UniformToFill" />
+                <!-- Background="#1A1A1A"
+                BorderBrush="#202020"-->
+                <Border Width="160"
+                        Height="50"
+                        Background="Transparent"
+                        CornerRadius="10"
+                        BorderBrush="Transparent"
+                        BorderThickness="2"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="20">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                        <!-- Boutons plus petits -->
+                        <Button Style="{StaticResource MenuButton}"
+                                Width="40"
+                                Height="40"
+                                Margin="0, 0, 10, 0">
+                            <Border Width="20"
+                                    Height="20"
+                                    Background="#FFFFFF">
+                                <Border.OpacityMask>
+                                    <ImageBrush ImageSource="/img/close.png" />
+                                </Border.OpacityMask>
+                            </Border>
+                        </Button>
+                        <Button Style="{StaticResource MenuButton}"
+                                Width="40"
+                                Height="40"
+                                Margin="0, 0, 10, 0">
+                            <Border Width="30"
+                                    Height="30"
+                                    Background="#FFFFFF">
+                                <Border.OpacityMask>
+                                    <ImageBrush ImageSource="/img/wave-sound.png" />
+                                </Border.OpacityMask>
+                            </Border>
+                        </Button>
+                        <Button Style="{StaticResource MenuButton}"
+                                Width="40"
+                                Height="40"
+                                Margin="0, 0, 0, 0">
+                            <Border Width="40"
+                                    Height="40"
+                                    Background="#FFFFFF">
+                                <Border.OpacityMask>
+                                    <ImageBrush ImageSource="/img/menu-bar.png" />
+                                </Border.OpacityMask>
+                            </Border>
+                        </Button>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
 
         <!-- Bandeau droit -->
         <Border Grid.Column="1"
@@ -87,7 +146,7 @@
                 <!-- 3 options cliquables -->
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center"
-                            Margin="0 0 0 20">
+                            Margin="0 0 -40 20">
 
                     <Button Style="{StaticResource MenuButton}"
                             Margin="0, 0, 40, 0">
@@ -117,6 +176,8 @@
 
                 </StackPanel>
 
+
+
                 <!-- Zone où tu pourras mettre du contenu plus tard -->
                 <Border Grid.Row="1"
                         Background="#2A2A2A"
@@ -125,5 +186,7 @@
                         BorderThickness="2" />
             </Grid>
         </Border>
+
+
     </Grid>
 </Window>

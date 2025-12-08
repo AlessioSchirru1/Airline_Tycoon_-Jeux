@@ -10,13 +10,20 @@
 
   <ItemGroup>
     <None Remove="img\avion.png" />
+    <None Remove="img\close.png" />
     <None Remove="img\manager.png" />
+    <None Remove="img\menu-bar.png" />
+    <None Remove="img\wave-sound.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="img\close.png" />
     <Resource Include="img\manager.png" />
+    <Resource Include="img\menu-bar.png" />
     <Resource Include="img\ticket.png" />
     <Resource Include="img\avion.png" />
+    <Resource Include="img\wave-sound.png" />
+    <Resource Include="img\world_map.jpg" />
   </ItemGroup>
 
 </Project>
