@@ -12,7 +12,157 @@
         Topmost="True"
         Width="1920"
         Height="1080">
-    <Grid>
 
+    <Window.Resources>
+        <Style x:Key="MenuButton"
+               TargetType="Button">
+            <Setter Property="Background"
+                    Value="#272727" />
+            <Setter Property="BorderThickness"
+                    Value="0" />
+            <Setter Property="Width"
+                    Value="80" />
+            <Setter Property="Height"
+                    Value="80" />
+            <Setter Property="Padding"
+                    Value="0" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <!-- Hover -->
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter Property="Background"
+                                        Value="#383838" />
+                            </Trigger>
+
+                            <!-- Click -->
+                            <Trigger Property="IsPressed"
+                                     Value="True">
+                                <Setter Property="Background"
+                                        Value="#1A1A1A" />
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <!-- Zone principale à gauche -->
+            <ColumnDefinition Width="*" />
+            <!-- Bandeau droit : environ 1/3 -->
+            <ColumnDefinition Width="0.33*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Panneau gauche (fond blanc) -->
+        <Border Grid.Column="0"
+                Background="White" />
+
+        <!-- Bandeau droit -->
+        <Border Grid.Column="1"
+                Background="#202020"
+                Padding="20">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <!-- Ligne des options -->
+                    <RowDefinition Height="Auto" />
+                    <!-- Contenu du panneau -->
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- 3 options cliquables -->
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            Margin="0 0 0 20">
+
+                    <Button Width="80"
+                            Height="80"
+                            Background="#272727"
+                            BorderThickness="0"
+                            Padding="0"
+                            Margin="0, 0, 40, 0">
+
+                        <StackPanel Orientation="Vertical"
+                                    VerticalAlignment="Center">
+
+                            <Border Width="40"
+                                    Height="40"
+                                    Background="#FFFFFF">
+
+                                <Border.OpacityMask>
+                                    <ImageBrush ImageSource="/img/avion.png" />
+                                </Border.OpacityMask>
+
+                            </Border>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Width="80"
+                            Height="80"
+                            Background="#272727"
+                            BorderThickness="0"
+                            Padding="0"
+                            Margin="0, 0, 40, 0">
+
+                        <StackPanel Orientation="Vertical"
+                                    VerticalAlignment="Center">
+
+                            <Border Width="40"
+                                    Height="40"
+                                    Background="#FFFFFF">
+
+                                <Border.OpacityMask>
+                                    <ImageBrush ImageSource="/img/avion.png" />
+                                </Border.OpacityMask>
+
+                            </Border>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Width="80"
+                            Height="80"
+                            Background="#272727"
+                            BorderThickness="0"
+                            Padding="0">
+
+                        <StackPanel Orientation="Vertical"
+                                    VerticalAlignment="Center">
+
+                            <Border Width="40"
+                                    Height="40"
+                                    Background="#FFFFFF">
+
+                                <Border.OpacityMask>
+                                    <ImageBrush ImageSource="/img/avion.png" />
+                                </Border.OpacityMask>
+
+                            </Border>
+                        </StackPanel>
+                    </Button>
+
+
+                </StackPanel>
+
+                <!-- Zone où tu pourras mettre du contenu plus tard -->
+                <Border Grid.Row="1"
+                        Background="#2A2A2A"
+                        CornerRadius="10"
+                        BorderBrush="#444"
+                        BorderThickness="2" />
+            </Grid>
+        </Border>
     </Grid>
 </Window>
