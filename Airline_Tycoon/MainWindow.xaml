@@ -61,22 +61,22 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <!-- Zone principale à gauche -->
+            <!-- Zone de jeux à gauche -->
             <ColumnDefinition Width="*" />
-            <!-- Bandeau droit : environ 1/3 -->
+            <!-- Bandeau d'amélioration et d'option -->
             <ColumnDefinition Width="0.44*"
                               MinWidth="200" />
         </Grid.ColumnDefinitions>
 
         <!-- Panneau gauche (carte du monde) -->
-
         <Border Grid.Column="0"
                 Background="Black">
             <Grid>
                 <Image Source="/img/world_map.jpg"
                        Stretch="UniformToFill" />
-                <!-- Background="#1A1A1A"
-                BorderBrush="#202020"-->
+                
+                <!-- Background="#1A1A1A" -->
+                <!-- BorderBrush="#202020" -->
                 <Border Width="160"
                         Height="50"
                         Background="Transparent"
@@ -89,7 +89,6 @@
                     <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
-                        <!-- Boutons plus petits -->
                         <Button Style="{StaticResource MenuButton}"
                                 Width="40"
                                 Height="40"
@@ -102,6 +101,7 @@
                                 </Border.OpacityMask>
                             </Border>
                         </Button>
+                        
                         <Button Style="{StaticResource MenuButton}"
                                 Width="40"
                                 Height="40"
@@ -114,6 +114,7 @@
                                 </Border.OpacityMask>
                             </Border>
                         </Button>
+                        
                         <Button Style="{StaticResource MenuButton}"
                                 Width="40"
                                 Height="40"
@@ -143,11 +144,9 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <!-- 3 options cliquables -->
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center"
                             Margin="0 0 -40 20">
-
                     <Button Style="{StaticResource MenuButton}"
                             Margin="0, 0, 40, 0">
                         <Border Width="40"
@@ -172,13 +171,8 @@
                                Height="50"
                                Source="/img/manager.png" />
                     </Button>
-
-
                 </StackPanel>
 
-
-
-                <!-- Zone où tu pourras mettre du contenu plus tard -->
                 <Border Grid.Row="1"
                         Background="#2A2A2A"
                         CornerRadius="10"
@@ -186,7 +180,5 @@
                         BorderThickness="2" />
             </Grid>
         </Border>
-
-
     </Grid>
 </Window>
