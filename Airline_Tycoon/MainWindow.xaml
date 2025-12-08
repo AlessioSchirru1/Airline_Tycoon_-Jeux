@@ -64,7 +64,8 @@
             <!-- Zone principale à gauche -->
             <ColumnDefinition Width="*" />
             <!-- Bandeau droit : environ 1/3 -->
-            <ColumnDefinition Width="0.33*" />
+            <ColumnDefinition Width="0.4*"
+                              MinWidth="200" />
         </Grid.ColumnDefinitions>
 
         <!-- Panneau gauche (fond blanc) -->
@@ -90,55 +91,27 @@
 
                     <Button Style="{StaticResource MenuButton}"
                             Margin="0, 0, 40, 0">
-
-                        <StackPanel Orientation="Vertical"
-                                    VerticalAlignment="Center">
-
-                            <Border Width="40"
-                                    Height="40"
-                                    Background="#FFFFFF">
-
-                                <Border.OpacityMask>
-                                    <ImageBrush ImageSource="/img/avion.png" />
-                                </Border.OpacityMask>
-
-                            </Border>
-                        </StackPanel>
+                        <Border Width="40"
+                                Height="40"
+                                Background="#FFFFFF">
+                            <Border.OpacityMask>
+                                <ImageBrush ImageSource="/img/avion.png" />
+                            </Border.OpacityMask>
+                        </Border>
                     </Button>
 
                     <Button Style="{StaticResource MenuButton}"
-                            Margin="0, 0, 40, 0">
-
-                        <StackPanel Orientation="Vertical"
-                                    VerticalAlignment="Center">
-
-                            <Border Width="40"
-                                    Height="40"
-                                    Background="#FFFFFF">
-
-                                <Border.OpacityMask>
-                                    <ImageBrush ImageSource="/img/avion.png" />
-                                </Border.OpacityMask>
-
-                            </Border>
-                        </StackPanel>
+                            Margin="0,0,40,0">
+                        <Image Width="60"
+                               Height="60"
+                               Source="/img/ticket.png" />
                     </Button>
 
-                    <Button Style="{StaticResource MenuButton}">
-
-                        <StackPanel Orientation="Vertical"
-                                    VerticalAlignment="Center">
-
-                            <Border Width="40"
-                                    Height="40"
-                                    Background="#FFFFFF">
-
-                                <Border.OpacityMask>
-                                    <ImageBrush ImageSource="/img/avion.png" />
-                                </Border.OpacityMask>
-
-                            </Border>
-                        </StackPanel>
+                    <Button Style="{StaticResource MenuButton}"
+                            Margin="0,0,40,0">
+                        <Image Width="50"
+                               Height="50"
+                               Source="/img/manager.png" />
                     </Button>
 
 
