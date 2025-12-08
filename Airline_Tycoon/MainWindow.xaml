@@ -14,48 +14,7 @@
         Height="1080">
 
     <Window.Resources>
-        <Style x:Key="MenuButton"
-               TargetType="Button">
-            <Setter Property="Background"
-                    Value="#272727" />
-            <Setter Property="BorderThickness"
-                    Value="0" />
-            <Setter Property="Width"
-                    Value="100" />
-            <Setter Property="Height"
-                    Value="80" />
-            <Setter Property="Padding"
-                    Value="0" />
-
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                CornerRadius="10">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center" />
-                        </Border>
-
-                        <ControlTemplate.Triggers>
-                            <!-- Hover -->
-                            <Trigger Property="IsMouseOver"
-                                     Value="True">
-                                <Setter Property="Background"
-                                        Value="#383838" />
-                            </Trigger>
-
-                            <!-- Click -->
-                            <Trigger Property="IsPressed"
-                                     Value="True">
-                                <Setter Property="Background"
-                                        Value="#1A1A1A" />
-                            </Trigger>
-
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        
     </Window.Resources>
 
 
@@ -92,7 +51,8 @@
                         <Button Style="{StaticResource MenuButton}"
                                 Width="40"
                                 Height="40"
-                                Margin="0, 0, 10, 0">
+                                Margin="0, 0, 10, 0"
+                                Click="CloseButton_Click">
                             <Border Width="20"
                                     Height="20"
                                     Background="#FFFFFF">

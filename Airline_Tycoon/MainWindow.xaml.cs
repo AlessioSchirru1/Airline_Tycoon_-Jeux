@@ -20,5 +20,17 @@ namespace Airline_Tycoon
         {
             InitializeComponent();
         }
+
+        private void CloseButton_Click( object sender, RoutedEventArgs e )
+        {
+            ConfirmationWindow confirm = new ConfirmationWindow();
+            confirm.Owner = this; // centre la fenêtre par rapport à MainWindow
+            confirm.ShowDialog(); // ouvre en modal
+
+            if(confirm.IsConfirmed)
+            {
+                Application.Current.Shutdown(); // ferme l'application
+            }
+        }
     }
 }
