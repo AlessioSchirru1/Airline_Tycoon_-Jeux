@@ -34,7 +34,7 @@ namespace Airline_Tycoon
 
         private void NoButton_Click( object sender, RoutedEventArgs e )
         {
-            IsConfirmed = false;
+            IsConfirmed = false;//
             this.Close();
         }
     }
