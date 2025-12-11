@@ -1,0 +1,168 @@
+﻿<UserControl x:Class="Airline_Tycoon.AirplaneItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Height="200"
+             HorizontalAlignment="Left"
+             MaxWidth="500">
+
+    <StackPanel Margin="0 0 0 0"
+                x:Name="ListContainer"
+                HorizontalAlignment="Center"
+                Width="Auto">
+
+        <!-- Carte avion -->
+        <Border Background="#333"
+                CornerRadius="10"
+                Padding="15"
+                Margin="0 0 0 20">
+
+            <StackPanel>
+
+                <!-- Titre avion + icône -->
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/img/avion.png"
+                           Width="30"
+                           Height="30"
+                           Margin="0 0 10 0" />
+                    <TextBlock Text="Airplane"
+                               x:Name="TitleText"
+                               FontSize="20"
+                               Foreground="White" />
+                </StackPanel>
+
+                <!-- Ligne des 3 boutons -->
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Left"
+                            Margin="0 15 0 0">
+
+                    <!-- BUTTON 1 : Seats -->
+                    <Button x:Name="SeatsButton"
+                            Width="110"
+                            Height="80"
+                            Background="#00C853"
+                            BorderThickness="0"
+                            Margin="0 0 15 0"
+                            Click="SeatsButton_Click">
+
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius"
+                                        Value="10" />
+                            </Style>
+                        </Button.Resources>
+
+                        <StackPanel VerticalAlignment="Center"
+                                    HorizontalAlignment="Center">
+
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Center">
+                                <Image Source="/img/utilisateur.png"
+                                       Width="20"
+                                       Height="20"
+                                       Margin="0 0 5 0" />
+                                <TextBlock x:Name="SeatsValueText"
+                                           Text="10"
+                                           Foreground="White"
+                                           FontSize="18"
+                                           FontWeight="Bold" />
+                            </StackPanel>
+
+                            <TextBlock x:Name="SeatsPriceText"
+                                       Text="$200"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       Margin="0 5 0 0"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+
+                    <!-- BUTTON 2 : Min Ticket -->
+                    <Button x:Name="TicketButton"
+                            Width="110"
+                            Height="80"
+                            Background="#00A3FF"
+                            BorderThickness="0"
+                            Margin="0 0 15 0"
+                            Click="TicketButton_Click">
+
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius"
+                                        Value="10" />
+                            </Style>
+                        </Button.Resources>
+
+                        <StackPanel VerticalAlignment="Center"
+                                    HorizontalAlignment="Center">
+
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/img/ticket.png"
+                                       Width="20"
+                                       Height="20"
+                                       Margin="0 0 5 0" />
+                                <TextBlock x:Name="TicketValueText"
+                                           Text="$18"
+                                           Foreground="White"
+                                           FontSize="18"
+                                           FontWeight="Bold" />
+                            </StackPanel>
+
+                            <TextBlock x:Name="TicketPriceText"
+                                       Text="$240"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       Margin="0 5 0 0"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+
+                    <!-- BUTTON 3 : Speed -->
+                    <Button x:Name="SpeedButton"
+                            Width="110"
+                            Height="80"
+                            Background="#9C27B0"
+                            BorderThickness="0"
+                            Click="SpeedButton_Click">
+
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius"
+                                        Value="10" />
+                            </Style>
+                        </Button.Resources>
+
+                        <StackPanel VerticalAlignment="Center"
+                                    HorizontalAlignment="Center">
+
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/img/vitesse.png"
+                                       Width="20"
+                                       Height="20"
+                                       Margin="0 0 5 0" />
+                                <TextBlock x:Name="SpeedValueText"
+                                           Text="100"
+                                           Foreground="White"
+                                           FontSize="18"
+                                           FontWeight="Bold" />
+                            </StackPanel>
+
+                            <TextBlock x:Name="SpeedPriceText"
+                                       Text="$100"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       Margin="0 5 0 0"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+
+                </StackPanel>
+
+            </StackPanel>
+
+        </Border>
+    </StackPanel>
+
+    <!-- Ton design actuel -->
+    <!-- Copie/colle ton code des 3 boutons + bordure -->
+
+</UserControl>

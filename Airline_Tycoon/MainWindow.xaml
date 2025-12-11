@@ -14,7 +14,7 @@
         Height="1080">
 
     <Window.Resources>
-        
+
     </Window.Resources>
 
 
@@ -33,7 +33,7 @@
             <Grid>
                 <Image Source="/img/world_map.jpg"
                        Stretch="UniformToFill" />
-                
+
                 <!-- Background="#1A1A1A" -->
                 <!-- BorderBrush="#202020" -->
                 <Border Width="160"
@@ -61,7 +61,7 @@
                                 </Border.OpacityMask>
                             </Border>
                         </Button>
-                        
+
                         <Button Style="{StaticResource MenuButton}"
                                 Width="40"
                                 Height="40"
@@ -74,7 +74,7 @@
                                 </Border.OpacityMask>
                             </Border>
                         </Button>
-                        
+
                         <Button Style="{StaticResource MenuButton}"
                                 Width="40"
                                 Height="40"
@@ -108,7 +108,9 @@
                             HorizontalAlignment="Center"
                             Margin="0 0 -40 20">
                     <Button Style="{StaticResource MenuButton}"
-                            Margin="0, 0, 40, 0">
+                            Margin="0, 0, 40, 0"
+                            x:Name="AirplanesButton"
+                            Click="AirplanesButton_Click">
                         <Border Width="40"
                                 Height="40"
                                 Background="#FFFFFF">
@@ -119,14 +121,18 @@
                     </Button>
 
                     <Button Style="{StaticResource MenuButton}"
-                            Margin="0,0,40,0">
+                            Margin="0,0,40,0"
+                            x:Name="TicketsButton"
+                            Click="TicketsButton_Click">
                         <Image Width="60"
                                Height="60"
                                Source="/img/ticket.png" />
                     </Button>
 
                     <Button Style="{StaticResource MenuButton}"
-                            Margin="0,0,40,0">
+                            Margin="0,0,40,0"
+                            x:Name="ManagerButton"
+                            Click="ManagerButton_Click">
                         <Image Width="50"
                                Height="50"
                                Source="/img/manager.png" />
@@ -137,7 +143,9 @@
                         Background="#2A2A2A"
                         CornerRadius="10"
                         BorderBrush="#444"
-                        BorderThickness="2" />
+                        BorderThickness="2">
+                    <ContentControl x:Name="ContentArea" />
+                </Border>
             </Grid>
         </Border>
     </Grid>

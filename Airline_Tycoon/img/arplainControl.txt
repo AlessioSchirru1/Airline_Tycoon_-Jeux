@@ -1,0 +1,37 @@
+<UserControl x:Class="Airline_Tycoon.AirplanesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="Transparent">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20" x:Name="ListContainer">
+
+            <TextBlock Text="Airplanes"
+                       FontSize="26"
+                       Foreground="White"
+                       Margin="0 0 0 20" />
+
+            <!-- Les avions seront ajoutés ici dynamiquement -->
+
+            <!-- Bouton achat -->
+            <Button x:Name="AddAirplaneButton"
+                    Height="60"
+                    Margin="0 20 0 0"
+                    Background="#444"
+                    Foreground="White"
+                    Click="AddAirplaneButton_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+
+                <TextBlock Text="+ Buy New Airplane"
+                           FontSize="20"
+                           FontWeight="Bold"
+                           HorizontalAlignment="Center"/>
+            </Button>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
