@@ -100,6 +100,11 @@ namespace Airline_Tycoon
                 ContentArea.Content = newContent; // afficher
         }
 
-
+        private void Boutonparametre_Click(object sender, RoutedEventArgs e)
+        {
+            parametre confirm = new parametre();
+            confirm.Owner = this; // centre la fenêtre par rapport à MainWindow
+            confirm.ShowDialog(); // ouvre en modal
+        }
     }
 }

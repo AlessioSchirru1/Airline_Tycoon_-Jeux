@@ -62,10 +62,10 @@
                             </Border>
                         </Button>
 
-                        <Button Style="{StaticResource MenuButton}"
+                        <Button x:Name="Boutonparametre" Style="{StaticResource MenuButton}"
                                 Width="40"
                                 Height="40"
-                                Margin="0, 0, 10, 0">
+                                Margin="0, 0, 10, 0" Click="Boutonparametre_Click">
                             <Border Width="30"
                                     Height="30"
                                     Background="#FFFFFF">
