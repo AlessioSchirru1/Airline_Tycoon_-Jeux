@@ -23,6 +23,13 @@ namespace Airline_Tycoon
         public parametre()
         {
             InitializeComponent();
+            cbVolumeson.Items.Add("100");
+            cbVolumeson.Items.Add("90");
+            cbVolumeson.Items.Add("80");
+            cbVolumeson.Items.Add("70");
+            cbVolumeson.Items.Add("60");
+            cbVolumeson.Items.Add("50");
+            cbVolumeson.Items.Add("40");
             cbVolumeson.Items.Add("30");
             cbVolumeson.Items.Add("20");
             cbVolumeson.Items.Add("10");
@@ -34,6 +41,15 @@ namespace Airline_Tycoon
         {
             // C'est ici que tu mettras le code pour changer le volume
             // Pour l'instant, tu peux laisser vide ou mettre un message de test
+        }
+
+        private void butonfermer_Click(object sender, RoutedEventArgs e)
+        {
+            if (cbVolumeson.SelectedItem != null)
+            {
+                string valeur = cbVolumeson.SelectedItem.ToString();
+                MessageBox.Show("Valeur : " + valeur);
+            }
         }
     }
 }

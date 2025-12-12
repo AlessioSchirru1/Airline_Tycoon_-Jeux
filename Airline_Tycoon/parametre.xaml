@@ -18,10 +18,11 @@
             BorderThickness="2"
             Padding="15">
             <StackPanel>
-                <Label Content="Choisissez la valeur du son souhaité" Width="160" Height="30"/>
+                <Label Content="Choisissez la valeur du son souhaité" Width="160" Height="30" Margin="0,30,0,0"/>
                 <StackPanel>
-                    <ComboBox x:Name="cbVolumeson" Width="120" SelectionChanged="cbVolumeson_SelectionChanged" RenderTransformOrigin="0.471,2.231"/>
+                    <ComboBox x:Name="cbVolumeson" Width="120" SelectionChanged="cbVolumeson_SelectionChanged" RenderTransformOrigin="0.471,2.231" Margin="0,20,0,0"/>
                 </StackPanel>
+                <Button x:Name="butonfermer" Content="Fermer pour valider" Width="115" Margin="0,20,0,0" Click="butonfermer_Click"/>
             </StackPanel>
         </Border>
     </Grid>
