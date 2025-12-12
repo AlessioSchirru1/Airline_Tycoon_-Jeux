@@ -36,6 +36,7 @@ namespace Airline_Tycoon
             ticketsView = new TicketsView(); // à créer
             managerView = new ManagerView(); // à créer
 
+            // Initialisation du champ non-nullable
             currentAirplanesView = airplanesView;
         }
 
