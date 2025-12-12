@@ -37,14 +37,5 @@ namespace Airline_Tycoon
             IsConfirmed = false;//
             this.Close();
         }
-
-        private void Window_PreviewKeyDown( object sender, KeyEventArgs e )
-        {
-            if(e.Key == Key.Back)
-            {
-                IsConfirmed = false;
-                Close();
-            }
-        }
     }
 }
