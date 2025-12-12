@@ -30,6 +30,10 @@ namespace Airline_Tycoon
             // Astuce : Sélectionner le premier élément par défaut (évite une case vide)
             cbVolumeson.SelectedIndex = 0;
         }
-
+        private void cbVolumeson_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // C'est ici que tu mettras le code pour changer le volume
+            // Pour l'instant, tu peux laisser vide ou mettre un message de test
+        }
     }
 }

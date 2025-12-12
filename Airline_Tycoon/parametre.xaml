@@ -11,5 +11,6 @@
             </LinearGradientBrush>
         </Grid.Background>
         <ComboBox x:Name="cbVolumeson" HorizontalAlignment="Left" Margin="318,254,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cbVolumeson_SelectionChanged"/>
+        <Label Content="Choisissez la valeur du son souhaité" HorizontalAlignment="Center" Margin="0,144,0,0" VerticalAlignment="Top" Width="160" Height="30"/>
     </Grid>
 </Window>
