@@ -23,6 +23,7 @@ namespace Airline_Tycoon
     public partial class AirplaneItem :UserControl
     {
         private Airplane airplane;
+        private MainWindow main = new MainWindow();
 
         public AirplaneItem( Airplane airplaneModel , int index)
         {
@@ -32,11 +33,27 @@ namespace Airline_Tycoon
             // On enregistre l'objet avion
             airplane = airplaneModel;
 
+            main = Application.Current.MainWindow as MainWindow;
+
             // On met le titre correct
             TitleText.Text = $"Airplane {index}";
 
             // On charge les valeurs dans l'affichage
             LoadAirplaneData();
+            UpdateButtons();
+        }
+
+        private void UpdateButtons()
+        {
+            SeatsButton.IsEnabled = main.Capital >= airplane.SeatsPrice;
+            TicketButton.IsEnabled = main.Capital >= airplane.TicketPrice;
+            SpeedButton.IsEnabled = main.Capital >= airplane.SpeedPrice;
+        }
+
+        public void RefreshState()
+        {
+            LoadAirplaneData();
+            UpdateButtons();
         }
 
         private void LoadAirplaneData()
@@ -53,26 +70,47 @@ namespace Airline_Tycoon
 
         private void SeatsButton_Click( object sender, RoutedEventArgs e )
         {
-            // Plus tard, tu remplaceras ça par ta fonction
+            if(main.Capital < airplane.SeatsPrice)
+                return;
+
+            main.Capital -= airplane.SeatsPrice;
             airplane.Seats++;
             airplane.SeatsPrice += 20;
+
             LoadAirplaneData();
+            UpdateButtons();
+
+            main.UpdateCapitalDisplay();
         }
 
         private void TicketButton_Click( object sender, RoutedEventArgs e )
         {
-            // Plus tard, tu remplaceras ça par ta fonction
+            if(main.Capital < airplane.TicketPrice)
+                return;
+
+            main.Capital -= airplane.TicketPrice;
             airplane.Ticket++;
             airplane.TicketPrice += 20;
+
             LoadAirplaneData();
+            UpdateButtons();
+
+            main.UpdateCapitalDisplay();
         }
 
         private void SpeedButton_Click( object sender, RoutedEventArgs e )
         {
-            // Plus tard, tu remplaceras ça par ta fonction
+            if(main.Capital < airplane.SpeedPrice)
+                return;
+
+            main.Capital -= airplane.SpeedPrice;
             airplane.Speed++;
             airplane.SpeedPrice += 20;
+
             LoadAirplaneData();
+            UpdateButtons();
+
+            main.UpdateCapitalDisplay();
         }
 
         public void SetTitle( string title )

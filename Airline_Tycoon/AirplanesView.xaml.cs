@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Linq;
 
 namespace Airline_Tycoon
 {
@@ -21,6 +23,7 @@ namespace Airline_Tycoon
     public partial class AirplanesView :UserControl
     {
         private List<Airplane> airplanes;
+
 
         public AirplanesView( List<Airplane> airplaneList )
         {
@@ -35,6 +38,11 @@ namespace Airline_Tycoon
             }
 
             GenerateAirplaneViews();
+
+            var main = Application.Current.MainWindow as MainWindow;
+            main.CapitalChanged += UpdateButtonsState;
+
+            UpdateButtonsState();
         }
 
         private void GenerateAirplaneViews()
@@ -62,12 +70,32 @@ namespace Airline_Tycoon
 
             // Régénère l'affichage complet
             GenerateAirplaneViews();
+
+            UpdateButtonsState();
         }
 
+        public void UpdateButtonsState()
+        {
+            var main = Application.Current.MainWindow as MainWindow;
 
+            foreach(var plane in airplanes)
+            {
+                // Exemple : seats
+                plane.CanUpgradeSeats = main.Capital >= plane.SeatsPrice;
 
-        
+                // speed
+                plane.CanUpgradeSpeed = main.Capital >= plane.SpeedPrice;
 
+                // tickets
+                plane.CanUpgradeTickets = main.Capital >= plane.TicketPrice;
+            }
+
+            // Raffraîchit l’écran
+            foreach(var child in ListContainer.Children.OfType<AirplaneItem>())
+            {
+                child.RefreshState();
+            }
+        }
 
     }
 }

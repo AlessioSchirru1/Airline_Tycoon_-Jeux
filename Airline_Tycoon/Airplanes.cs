@@ -16,6 +16,10 @@ namespace Airline_Tycoon
 
         public int Speed { get; set; } = 100;
         public int SpeedPrice { get; set; } = 100;
+
+        public bool CanUpgradeSeats { get; set; }
+        public bool CanUpgradeSpeed { get; set; }
+        public bool CanUpgradeTickets { get; set; }
     }
 
 }

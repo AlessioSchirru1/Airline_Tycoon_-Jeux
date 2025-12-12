@@ -17,6 +17,8 @@ namespace Airline_Tycoon
     public partial class MainWindow :Window
     {
         public List<Airplane> Airplanes { get; private set; } = new List<Airplane>();
+        private AirplanesView currentAirplanesView;
+
 
         // On garde la trace du contenu affiché
         private object currentContent = null;
@@ -39,7 +41,12 @@ namespace Airline_Tycoon
             managerView = new ManagerView(); // à créer
         }
 
-        private void AirplanesButton_Click( object sender, RoutedEventArgs e ) => ToggleContent(airplanesView);
+        private void AirplanesButton_Click( object sender, RoutedEventArgs e )
+        {
+            ToggleContent(airplanesView);
+            currentAirplanesView = airplanesView;
+        }
+
         private void TicketsButton_Click( object sender, RoutedEventArgs e ) => ToggleContent(ticketsView);
         private void ManagerButton_Click( object sender, RoutedEventArgs e ) => ToggleContent(managerView);
 
@@ -55,43 +62,6 @@ namespace Airline_Tycoon
             }
         }
 
-        // methode pour ouvrire les different types d'améliorations
-
-        
-
-        //private void AirplanesButton_Click( object sender, RoutedEventArgs e )
-        //{
-        //    ToggleContent(new AirplanesView(Airplanes));
-        //}
-
-        ////Exemple pour d'autres boutons (TicketButton, ManagerButton…)
-        //private void TicketsButton_Click( object sender, RoutedEventArgs e )
-        //{
-        //    ToggleContent(new TicketsView()); // à créer
-        //}
-
-        //private void ManagerButton_Click( object sender, RoutedEventArgs e )
-        //{
-        //    ToggleContent(new ManagerView()); // à créer
-        //}
-
-        // Fonction toggle
-        //private void ToggleContent( object newContent )
-        //{
-        //    if(currentContent == newContent)
-        //    {
-        //        // Si c'est déjà affiché → on cache
-        //        ContentArea.Content = null;
-        //        currentContent = null;
-        //    }
-        //    else
-        //    {
-        //        // Sinon on affiche le nouveau
-        //        ContentArea.Content = newContent;
-        //        currentContent = newContent;
-        //    }
-        //}
-
         private void ToggleContent( UserControl newContent )
         {
             if(ContentArea.Content == newContent)
@@ -100,11 +70,56 @@ namespace Airline_Tycoon
                 ContentArea.Content = newContent; // afficher
         }
 
-        private void Boutonparametre_Click(object sender, RoutedEventArgs e)
+        private void Boutonparametre_Click( object sender, RoutedEventArgs e )
         {
             parametre confirm = new parametre();
             confirm.Owner = this; // centre la fenêtre par rapport à MainWindow
             confirm.ShowDialog(); // ouvre en modal
+        }
+
+        public event Action CapitalChanged;
+
+
+
+
+        private void AddMoney_Click( object sender, RoutedEventArgs e )
+        {
+            Capital += 500;
+            UpdateCapitalDisplay();
+        }
+
+        public void UpdateCapitalDisplay()
+        {
+            CapitalText.Text = $"${Capital}";
+        }
+
+        public int Capital
+        {
+            get => _capital;
+            set
+            {
+                _capital = value;
+                CapitalText.Text = $"${_capital}";
+                CapitalChanged?.Invoke();
+            }
+        }
+
+        private int _capital = 1000;
+
+        public bool TrySpendMoney( int amount )
+        {
+            if(Capital >= amount)
+            {
+                Capital -= amount;
+                return true;
+            }
+
+            return false;
+        }
+
+        public void RefreshAirplaneItems()
+        {
+            currentAirplanesView?.UpdateButtonsState();
         }
     }
 }
