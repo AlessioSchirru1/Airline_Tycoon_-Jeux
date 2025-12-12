@@ -23,7 +23,7 @@ namespace Airline_Tycoon
     public partial class AirplaneItem :UserControl
     {
         private Airplane airplane;
-        private MainWindow main = new MainWindow();
+        private MainWindow main;
 
         public AirplaneItem( Airplane airplaneModel , int index)
         {
@@ -34,6 +34,8 @@ namespace Airline_Tycoon
             airplane = airplaneModel;
 
             main = Application.Current.MainWindow as MainWindow;
+            if(main == null)
+                throw new InvalidOperationException("MainWindow n'est pas encore initialisée.");
 
             // On met le titre correct
             TitleText.Text = $"Airplane {index}";

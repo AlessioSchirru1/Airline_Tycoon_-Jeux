@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Numerics;
 
 namespace Airline_Tycoon
 {
@@ -26,26 +27,42 @@ namespace Airline_Tycoon
 
         public MainWindow()
         {
-            try
-            {
-                InitializeComponent();
+            InitializeComponent();
 
-                Airplanes.Add(new Airplane());
-                Airplanes.Add(new Airplane());
+            this.PreviewKeyDown += MainWindow_PreviewKeyDown;
 
-                // Instanciation unique des panels
-                airplanesView = new AirplanesView(Airplanes);
-                ticketsView = new TicketsView(); // à créer
-                managerView = new ManagerView(); // à créer
+            Airplanes.Add(new Airplane());
+            Airplanes.Add(new Airplane());
 
-                //// Initialisation du champ non-nullable
-                currentAirplanesView = airplanesView;
-            }
+            airplanesView = new AirplanesView(Airplanes);
+            ticketsView = new TicketsView(); // à créer
+            managerView = new ManagerView(); // à créer
+            ContentArea.Content = airplanesView;
 
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+            currentAirplanesView = airplanesView;
+
+
+
+            //try
+            //{
+            //    InitializeComponent();
+
+            //    Airplanes.Add(new Airplane());
+            //    Airplanes.Add(new Airplane());
+
+            //    // Instanciation unique des panels
+            //    airplanesView = new AirplanesView(Airplanes);
+            //    ticketsView = new TicketsView(); // à créer
+            //    managerView = new ManagerView(); // à créer
+
+            //    //// Initialisation du champ non-nullable
+            //    currentAirplanesView = airplanesView;
+            //}
+
+            //catch(Exception ex)
+            //{
+            //    MessageBox.Show(ex.ToString());
+            //}
         }
 
         private void AirplanesButton_Click( object sender, RoutedEventArgs e )
@@ -60,58 +77,53 @@ namespace Airline_Tycoon
         private void CloseButton_Click( object sender, RoutedEventArgs e )
         {
             ConfirmationWindow confirm = new ConfirmationWindow();
-            confirm.Owner = this; // centre la fenêtre par rapport à MainWindow
-            confirm.ShowDialog(); // ouvre en modal
+            confirm.Owner = this;
+            confirm.ShowDialog();
 
             if(confirm.IsConfirmed)
             {
-                Application.Current.Shutdown(); // ferme l'application
+                Application.Current.Shutdown();
             }
         }
 
         private void ToggleContent( UserControl newContent )
         {
-            if(ContentArea.Content == newContent)
-                ContentArea.Content = null; // déjà affiché → cacher
-            else
-                ContentArea.Content = newContent; // afficher
+            if(ContentArea.Content != newContent)
+                ContentArea.Content = newContent;
         }
 
         private void Boutonparametre_Click( object sender, RoutedEventArgs e )
         {
             parametre confirm = new parametre();
-            confirm.Owner = this; // centre la fenêtre par rapport à MainWindow
-            confirm.ShowDialog(); // ouvre en modal
+            confirm.Owner = this;
+            confirm.ShowDialog();
         }
 
         public event Action CapitalChanged;
 
-
-
+        private BigInteger  _capital = 0;
 
         private void AddMoney_Click( object sender, RoutedEventArgs e )
         {
-            Capital += 500;
+            Capital += BigInteger.Parse("5000");
             UpdateCapitalDisplay();
         }
 
-        public void UpdateCapitalDisplay()
-        {
-            CapitalText.Text = $"${Capital}";
-        }
+        public void UpdateCapitalDisplay() => CapitalText.Text = $"${NumberFormatter.Format(Capital)}";
+        
 
-        public int Capital
+        public BigInteger Capital
         {
             get => _capital;
             set
             {
                 _capital = value;
-                CapitalText.Text = $"${_capital}";
+                CapitalText.Text = $"${NumberFormatter.Format(_capital)}";
                 CapitalChanged?.Invoke();
             }
         }
 
-        private int _capital = 1000;
+        
 
         public bool TrySpendMoney( int amount )
         {
@@ -128,5 +140,25 @@ namespace Airline_Tycoon
         {
             currentAirplanesView?.UpdateButtonsState();
         }
+
+        private void MainWindow_PreviewKeyDown( object sender, KeyEventArgs e )
+        {
+            if(e.Key == Key.Escape)
+            {
+                OpenQuitConfirmation();
+                e.Handled = true;
+            }
+        }
+
+        private void OpenQuitConfirmation()
+        {
+            ConfirmationWindow confirm = new ConfirmationWindow();
+            confirm.Owner = this;
+            confirm.ShowDialog();
+
+            if(confirm.IsConfirmed)
+                Application.Current.Shutdown();
+        }
+
     }
 }

@@ -27,10 +27,12 @@
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Center">
                 <Button Style="{StaticResource MenuButton}"
+                        x:Name="YesButton"
                         Width="120"
                         Height="60"
                         Margin="0,0,20,0"
-                        Click="YesButton_Click">
+                        Click="YesButton_Click"
+                        IsDefault="True">
                     <TextBlock Text="Oui"
                                FontSize="18"
                                Foreground="White"
@@ -39,9 +41,11 @@
                 </Button>
                 
                 <Button Style="{StaticResource MenuButton}"
+                        x:Name="NoButton"
                         Width="120"
                         Height="60"
-                        Click="NoButton_Click">
+                        Click="NoButton_Click"
+                        IsCancel="True">
                     <TextBlock Text="Non"
                                FontSize="18"
                                Foreground="White"
