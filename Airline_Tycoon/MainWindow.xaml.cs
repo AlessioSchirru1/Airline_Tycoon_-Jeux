@@ -19,10 +19,6 @@ namespace Airline_Tycoon
         public List<Airplane> Airplanes { get; private set; } = new List<Airplane>();
         private AirplanesView currentAirplanesView;
 
-
-        // On garde la trace du contenu affiché
-        private object currentContent = null;
-
         // Références uniques aux panneaux
         private AirplanesView airplanesView;
         private TicketsView ticketsView;
@@ -39,6 +35,8 @@ namespace Airline_Tycoon
             airplanesView = new AirplanesView(Airplanes);
             ticketsView = new TicketsView(); // à créer
             managerView = new ManagerView(); // à créer
+
+            currentAirplanesView = airplanesView;
         }
 
         private void AirplanesButton_Click( object sender, RoutedEventArgs e )

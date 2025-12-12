@@ -33,7 +33,7 @@ namespace Airline_Tycoon
             // On enregistre l'objet avion
             airplane = airplaneModel;
 
-            main = Application.Current.MainWindow as MainWindow;
+            main = (MainWindow)Application.Current.MainWindow as MainWindow;
 
             // On met le titre correct
             TitleText.Text = $"Airplane {index}";
