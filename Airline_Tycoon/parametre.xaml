@@ -18,8 +18,10 @@
             BorderThickness="2"
             Padding="15">
             <StackPanel>
-                <ComboBox x:Name="cbVolumeson" HorizontalAlignment="Center" Margin="0,105,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cbVolumeson_SelectionChanged"/>
-                <Label Content="Choisissez la valeur du son souhaité" HorizontalAlignment="Center" Margin="0,70,0,0" VerticalAlignment="Top" Width="160" Height="30"/>
+                <Label Content="Choisissez la valeur du son souhaité" Width="160" Height="30"/>
+                <StackPanel>
+                    <ComboBox x:Name="cbVolumeson" Width="120" SelectionChanged="cbVolumeson_SelectionChanged" RenderTransformOrigin="0.471,2.231"/>
+                </StackPanel>
             </StackPanel>
         </Border>
     </Grid>
