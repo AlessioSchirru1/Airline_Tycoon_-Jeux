@@ -81,7 +81,7 @@ namespace Airline_Tycoon
             foreach(var plane in airplanes)
             {
                 // Exemple : seats
-                plane.CanUpgradeSeats = main!.Capital >= plane.SeatsPrice;
+                plane.CanUpgradeSeats = main.Capital >= plane.SeatsPrice;
 
                 // speed
                 plane.CanUpgradeSpeed = main.Capital >= plane.SpeedPrice;

@@ -26,18 +26,26 @@ namespace Airline_Tycoon
 
         public MainWindow()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
 
-            Airplanes.Add(new Airplane());
-            Airplanes.Add(new Airplane());
+                Airplanes.Add(new Airplane());
+                Airplanes.Add(new Airplane());
 
-            // Instanciation unique des panels
-            airplanesView = new AirplanesView(Airplanes);
-            ticketsView = new TicketsView(); // à créer
-            managerView = new ManagerView(); // à créer
+                // Instanciation unique des panels
+                airplanesView = new AirplanesView(Airplanes);
+                ticketsView = new TicketsView(); // à créer
+                managerView = new ManagerView(); // à créer
 
-            // Initialisation du champ non-nullable
-            currentAirplanesView = airplanesView;
+                //// Initialisation du champ non-nullable
+                currentAirplanesView = airplanesView;
+            }
+
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private void AirplanesButton_Click( object sender, RoutedEventArgs e )
