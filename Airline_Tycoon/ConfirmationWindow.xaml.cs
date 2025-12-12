@@ -37,5 +37,6 @@ namespace Airline_Tycoon
             IsConfirmed = false;//
             this.Close();
         }
+
     }
 }

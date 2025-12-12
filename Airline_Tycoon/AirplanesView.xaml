@@ -22,11 +22,19 @@
                                 Value="10" />
                     </Style>
                 </Button.Resources>
+                
+                <StackPanel>
+                    
 
-                <TextBlock Text="+ Buy New Airplane"
-                           FontSize="20"
-                           FontWeight="Bold"
-                           HorizontalAlignment="Center" />
+                    <TextBlock Text="+ Buy New Airplane"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center" />
+
+                    <TextBlock x:Name="NextAirplanePriceText"
+                               Text="$0" />
+                </StackPanel>
+                
             </Button>
 
         </StackPanel>

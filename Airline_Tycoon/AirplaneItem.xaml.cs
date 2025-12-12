@@ -50,6 +50,16 @@ namespace Airline_Tycoon
             SeatsButton.IsEnabled = main.Capital >= airplane.SeatsPrice;
             TicketButton.IsEnabled = main.Capital >= airplane.TicketPrice;
             SpeedButton.IsEnabled = main.Capital >= airplane.SpeedPrice;
+
+            // Met à jour la couleur du texte en fonction de l'état du bouton
+            SeatsValueText.Foreground = SeatsButton.IsEnabled ? Brushes.White : Brushes.Black;
+            SeatsPriceText.Foreground = SeatsButton.IsEnabled ? Brushes.White : Brushes.Black;
+
+            TicketValueText.Foreground = TicketButton.IsEnabled ? Brushes.White : Brushes.Black;
+            TicketPriceText.Foreground = TicketButton.IsEnabled ? Brushes.White : Brushes.Black;
+
+            SpeedValueText.Foreground = SpeedButton.IsEnabled ? Brushes.White : Brushes.Black;
+            SpeedPriceText.Foreground = SpeedButton.IsEnabled ? Brushes.White : Brushes.Black;
         }
 
         public void RefreshState()

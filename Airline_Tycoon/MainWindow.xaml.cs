@@ -17,8 +17,14 @@ namespace Airline_Tycoon
     /// </summary>
     public partial class MainWindow :Window
     {
+        // Collections
         public List<Airplane> Airplanes { get; private set; } = new List<Airplane>();
+        public List<Airport> Airports { get; private set; } = new List<Airport>();
+
+
         private AirplanesView currentAirplanesView;
+        //airportsView = new AirportsView( Airports);
+
 
         // Références uniques aux panneaux
         private AirplanesView airplanesView;
@@ -40,29 +46,6 @@ namespace Airline_Tycoon
             ContentArea.Content = airplanesView;
 
             currentAirplanesView = airplanesView;
-
-
-
-            //try
-            //{
-            //    InitializeComponent();
-
-            //    Airplanes.Add(new Airplane());
-            //    Airplanes.Add(new Airplane());
-
-            //    // Instanciation unique des panels
-            //    airplanesView = new AirplanesView(Airplanes);
-            //    ticketsView = new TicketsView(); // à créer
-            //    managerView = new ManagerView(); // à créer
-
-            //    //// Initialisation du champ non-nullable
-            //    currentAirplanesView = airplanesView;
-            //}
-
-            //catch(Exception ex)
-            //{
-            //    MessageBox.Show(ex.ToString());
-            //}
         }
 
         private void AirplanesButton_Click( object sender, RoutedEventArgs e )
@@ -71,7 +54,11 @@ namespace Airline_Tycoon
             currentAirplanesView = airplanesView;
         }
 
-        private void TicketsButton_Click( object sender, RoutedEventArgs e ) => ToggleContent(ticketsView);
+        private void TicketsButton_Click( object sender, RoutedEventArgs e )
+        {
+            ToggleContent(ticketsView);
+            //currentAirportsView = airportsView;
+        }
         private void ManagerButton_Click( object sender, RoutedEventArgs e ) => ToggleContent(managerView);
 
         private void CloseButton_Click( object sender, RoutedEventArgs e )
