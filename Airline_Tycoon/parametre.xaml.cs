@@ -20,6 +20,7 @@ namespace Airline_Tycoon
     /// </summary>
     public partial class parametre : Window
     {
+        public bool IsConfirmed { get; private set; } = false;
         public parametre()
         {
             InitializeComponent();
@@ -42,7 +43,7 @@ namespace Airline_Tycoon
             // C'est ici que tu mettras le code pour changer le volume
             // Pour l'instant, tu peux laisser vide ou mettre un message de test
         }
-
+        MediaPlayer monLecteur = new MediaPlayer();
         private void butonfermer_Click(object sender, RoutedEventArgs e)
         {
             if (cbVolumeson.SelectedItem != null)
@@ -50,6 +51,9 @@ namespace Airline_Tycoon
                 string valeur = cbVolumeson.SelectedItem.ToString();
                 MessageBox.Show("Valeur : " + valeur);
             }
+
+            IsConfirmed = false;//
+            this.Close();
         }
     }
 }

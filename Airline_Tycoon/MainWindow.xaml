@@ -86,7 +86,15 @@
                                 Click="CloseButton_Click">
                             <Border Width="20"
                                     Height="20"
-                                    Background="#FFFFFF">
+                                    Background="#FFFFFF" RenderTransformOrigin="0.5,0.5">
+                                <Border.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="83.916"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Border.RenderTransform>
                                 <Border.OpacityMask>
                                     <ImageBrush ImageSource="/img/close.png" />
                                 </Border.OpacityMask>
