@@ -147,5 +147,9 @@ namespace Airline_Tycoon
                 Application.Current.Shutdown();
         }
 
+        private void boutonregle_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

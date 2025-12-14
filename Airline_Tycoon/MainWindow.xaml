@@ -116,10 +116,10 @@
                             </Border>
                         </Button>
 
-                        <Button Style="{StaticResource MenuButton}"
+                        <Button x:Name="boutonregle" Style="{StaticResource MenuButton}"
                                 Width="40"
                                 Height="40"
-                                Margin="0, 0, 0, 0">
+                                Margin="0, 0, 0, 0" Click="boutonregle_Click">
                             <Border Width="40"
                                     Height="40"
                                     Background="#FFFFFF">
