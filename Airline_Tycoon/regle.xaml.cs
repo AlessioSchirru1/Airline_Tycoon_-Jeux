@@ -10,7 +10,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Airline_Tycoon
@@ -18,11 +17,17 @@ namespace Airline_Tycoon
     /// <summary>
     /// Logique d'interaction pour regle.xaml
     /// </summary>
-    public partial class regle : Page
+    public partial class regle : Window
     {
         public regle()
         {
             InitializeComponent();
+        }
+
+        private void fermer_regle_Click(object sender, RoutedEventArgs e)
+        {
+            IsConfirmed = false;
+            this.Close();
         }
     }
 }

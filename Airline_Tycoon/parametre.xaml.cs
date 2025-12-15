@@ -52,7 +52,7 @@ namespace Airline_Tycoon
                 MessageBox.Show("Valeur : " + valeur);
             }
 
-            IsConfirmed = false;//
+            IsConfirmed = false;
             this.Close();
         }
     }
