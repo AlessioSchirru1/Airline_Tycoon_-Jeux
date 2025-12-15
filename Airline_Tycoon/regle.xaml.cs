@@ -19,6 +19,7 @@ namespace Airline_Tycoon
     /// </summary>
     public partial class regle : Window
     {
+        public bool IsConfirmed { get; private set; } = false;
         public regle()
         {
             InitializeComponent();
