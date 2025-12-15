@@ -23,6 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="img\regle.png">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Resource>
     <Resource Include="img\utilisateur.png" />
   </ItemGroup>
 

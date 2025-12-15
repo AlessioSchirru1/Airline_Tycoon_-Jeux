@@ -149,7 +149,9 @@ namespace Airline_Tycoon
 
         private void boutonregle_Click(object sender, RoutedEventArgs e)
         {
-
+            regle confirm = new regle();
+            confirm.Owner = this;
+            confirm.ShowDialog();
         }
     }
 }

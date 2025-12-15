@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="regle" Height="450" Width="800">
     <Grid>
-        <Image Margin="10,10,10,10" Source="/img/Capture d'écran 2025-12-11 091652.png" Stretch="Fill"/>
-        <Button x:Name="fermer_regle" Content="Fermer" HorizontalAlignment="Left" Margin="747,10,0,0" VerticalAlignment="Top" Height="34" Width="47" Click="fermer_regle_Click"/>
+        <Image Margin="10,10,10,10" Source="/img/regle.png" Stretch="Fill"/>
+        <Button x:Name="fermer_regle" Content="Fermer" HorizontalAlignment="Left" Margin="713,10,0,0" VerticalAlignment="Top" Height="34" Width="47" Click="fermer_regle_Click"/>
 
     </Grid>
 </Window>
