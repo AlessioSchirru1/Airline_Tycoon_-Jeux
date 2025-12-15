@@ -35,6 +35,7 @@ namespace Airline_Tycoon
         {
             InitializeComponent();
 
+
             this.PreviewKeyDown += MainWindow_PreviewKeyDown;
 
             Airplanes.Add(new Airplane());
@@ -153,5 +154,7 @@ namespace Airline_Tycoon
             confirm.Owner = this;
             confirm.ShowDialog();
         }
+
+
     }
 }
