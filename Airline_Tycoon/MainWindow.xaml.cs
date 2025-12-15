@@ -18,6 +18,7 @@ namespace Airline_Tycoon
     public partial class MainWindow :Window
     {
         // Collections
+        private MediaPlayer _lecteurMusique = new MediaPlayer();
         public List<Airplane> Airplanes { get; private set; } = new List<Airplane>();
         public List<Airport> Airports { get; private set; } = new List<Airport>();
 
@@ -34,6 +35,7 @@ namespace Airline_Tycoon
         public MainWindow()
         {
             InitializeComponent();
+            DemarrerMusique();
 
 
             this.PreviewKeyDown += MainWindow_PreviewKeyDown;
@@ -154,7 +156,31 @@ namespace Airline_Tycoon
             confirm.Owner = this;
             confirm.ShowDialog();
         }
+        private void DemarrerMusique()
+        {
+            try
+            {
+                string chemin = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "musique", "musique.mp3");
 
+                _lecteurMusique.Open(new Uri(chemin, UriKind.Absolute));
 
+                _lecteurMusique.MediaEnded += (s, e) =>
+                {
+                    _lecteurMusique.Position = TimeSpan.Zero; // Retour au début
+                    _lecteurMusique.Play();
+                };
+
+                _lecteurMusique.Volume = 0.5; // Volume par défaut à 50%
+                _lecteurMusique.Play();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lecture musique : " + ex.Message);
+            }
+        }
+        public void ModifierVolume(double nouveauVolume)
+        {
+            _lecteurMusique.Volume = nouveauVolume;
+        }
     }
 }

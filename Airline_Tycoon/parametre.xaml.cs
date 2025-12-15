@@ -20,8 +20,9 @@ namespace Airline_Tycoon
     /// </summary>
     public partial class parametre : Window
     {
+        private MainWindow _fenetrePrincipale;
         public bool IsConfirmed { get; private set; } = false;
-        public parametre()
+        public parametre(MainWindow main)
         {
             InitializeComponent();
             cbVolumeson.Items.Add("100");
@@ -37,6 +38,7 @@ namespace Airline_Tycoon
 
             // Astuce : Sélectionner le premier élément par défaut (évite une case vide)
             cbVolumeson.SelectedIndex = 0;
+            _fenetrePrincipale = main;
         }
         private void cbVolumeson_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -50,6 +52,11 @@ namespace Airline_Tycoon
             {
                 string valeur = cbVolumeson.SelectedItem.ToString();
                 MessageBox.Show("Valeur : " + valeur);
+                if (double.TryParse(valeur, out double volumeEntier))
+                {
+                    // Convertit 50 en 0.5, 100 en 1.0, etc.
+                    _fenetrePrincipale.ModifierVolume(volumeEntier / 100.0);
+                }
             }
 
             IsConfirmed = false;
