@@ -84,7 +84,7 @@ namespace Airline_Tycoon
 
         private void Boutonparametre_Click( object sender, RoutedEventArgs e )
         {
-            parametre confirm = new parametre();
+            parametre confirm = new parametre(this);
             confirm.Owner = this;
             confirm.ShowDialog();
         }
