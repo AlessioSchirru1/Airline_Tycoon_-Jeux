@@ -28,7 +28,6 @@ namespace Airline_Tycoon
 
 
         private AirplanesView currentAirplanesView;
-        //airportsView = new AirportsView( Airports);
         private ManagerView currentManagerView;
 
 
@@ -52,7 +51,7 @@ namespace Airline_Tycoon
             // Créer les UserControls en passant les listes du GameManager
             airplanesView = new AirplanesView(gameManager.Airplanes, gameManager.Airports);
             airplanesView = new AirplanesView(gameManager.Airplanes, gameManager.Airports);
-            //managerView = new ManagerView(gameManager.Managers);
+            managerView = new ManagerView(gameManager.Managers);
 
             // Conteneur pour tous les UserControls
             ContentArea.Content = new Grid();

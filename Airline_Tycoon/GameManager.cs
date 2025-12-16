@@ -9,14 +9,13 @@ namespace Airline_Tycoon
 {
     public class GameManager
     {
+        public List<Manager> Managers { get; private set; } = new List<Manager>();
         public List<AirportData> Airports { get; private set; } = new List<AirportData>();
         public List<AirplaneData> Airplanes { get; private set; } = new List<AirplaneData>();
         public BigInteger Capital { get; set; } = 100000;
 
         private List<string> airportNames = new List<string>
-        {
-            "London", "New York", "Rome", "Alger", "Sydney", "Moscow", "Tokyo"
-        };
+            { "London", "New York", "Rome", "Alger", "Sydney", "Moscow", "Tokyo" };
 
         public GameManager()
         {
@@ -24,6 +23,8 @@ namespace Airline_Tycoon
             InitializeAirplanes();
             InitializeFlightRequests();
         }
+
+        
 
         private void InitializeAirports()
         {

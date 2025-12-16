@@ -37,23 +37,43 @@ namespace Airline_Tycoon
             TitleText.Text = $"Manager {index}";
 
             // On charge les valeurs dans l'affichage
-            LoadAirplaneData();
+            LoadManagerData();
             UpdateButtons();
         }
         private void UpdateButtons()
         {
             MultiplierSpeedButton.IsEnabled = main.Capital >= manager.MultiplierSpeedPrice;
-            MultiplierButton.IsEnabled = main.Capital >= manager.MultiplierPrice;
 
-            // Met à jour la couleur du texte en fonction de l'état du bouton
-            MutliplierSpeedValueText.Foreground = SeatsButton.IsEnabled ? Brushes.White : Brushes.Black;
-            SeatsPriceText.Foreground = SeatsButton.IsEnabled ? Brushes.White : Brushes.Black;
+            // Met à jour la couleur du texte
+            MultiplierSpeedValueText.Foreground = MultiplierSpeedButton.IsEnabled ? Brushes.White : Brushes.Black;
+            MultiplierSpeedPriceText.Foreground = MultiplierSpeedButton.IsEnabled ? Brushes.White : Brushes.Black;
+        }
 
-            TicketValueText.Foreground = TicketButton.IsEnabled ? Brushes.White : Brushes.Black;
-            TicketPriceText.Foreground = TicketButton.IsEnabled ? Brushes.White : Brushes.Black;
+        private void MultiplierSpeedButton_Click( object sender, RoutedEventArgs e )
+        {
+            if(main.Capital >= manager.MultiplierSpeedPrice)
+            {
+                main.Capital -= manager.MultiplierSpeedPrice;
+                manager.MultiplierSpeedValue++; // exemple
+                manager.MultiplierSpeedPrice *= 2; // prix augmente à chaque upgrade
+                RefreshState();
+            }
+        }
 
-            SpeedValueText.Foreground = SpeedButton.IsEnabled ? Brushes.White : Brushes.Black;
-            SpeedPriceText.Foreground = SpeedButton.IsEnabled ? Brushes.White : Brushes.Black;
+        public void RefreshState()
+        {
+            MultiplierSpeedButton.IsEnabled = main.Capital >= manager.MultiplierSpeedPrice;
+            MultiplierSpeedValueText.Foreground = MultiplierSpeedButton.IsEnabled ? Brushes.White : Brushes.Black;
+            MultiplierSpeedPriceText.Foreground = MultiplierSpeedButton.IsEnabled ? Brushes.White : Brushes.Black;
+            MultiplierSpeedValueText.Text = manager.MultiplierSpeedValue.ToString();
+            MultiplierSpeedPriceText.Text = $"${NumberFormatter.Format(manager.MultiplierSpeedPrice)}";
+
+        }
+
+        private void LoadManagerData()
+        {
+            MultiplierSpeedValueText.Text = manager.MultiplierSpeedValue.ToString();
+            MultiplierSpeedPriceText.Text = $"${NumberFormatter.Format(manager.MultiplierSpeedPrice)}";
         }
     }
 }

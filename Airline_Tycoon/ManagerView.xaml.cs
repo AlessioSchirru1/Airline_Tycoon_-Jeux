@@ -21,12 +21,12 @@ namespace Airline_Tycoon
     /// </summary>
     public partial class ManagerView : UserControl
     {
-        private List<Manager> manager;
+        private List<Manager> managers;
 
-        public ManagerView(List<Manager> managerList)
+        public ManagerView(List<Manager> managersList)
         {
             InitializeComponent();
-            manager = managerList;
+            managers = managersList;
 
             //managerView = new ManagerView(gameManager.Managers);
 
@@ -42,7 +42,7 @@ namespace Airline_Tycoon
             ListContainer.Children.Clear();
 
             int index = 1;
-            foreach (var manager in manager)
+            foreach (var manager in managers)
             {
                 ListContainer.Children.Add(new ManagerItem(manager, index));
                 index++;
@@ -51,33 +51,17 @@ namespace Airline_Tycoon
             // Bouton "Buy New Airplane" toujours en bas
             ListContainer.Children.Add(AddManagerButton);
 
-            int nextIndex = manager.Count + 1;
+            int nextIndex = managers.Count + 1;
             NextManagerPriceText.Text = $"${NumberFormatter.Format(GetManagerPrice(nextIndex))}";
 
         }
         private int managerCount = 0;
-        private void AddAirplaneButton_Click(object sender, RoutedEventArgs e)
-        {
-            var main = Application.Current.MainWindow as MainWindow;
-
-            int nextAirplaneIndex = manager.Count + 1;
-            BigInteger price = GetManagerPrice(nextAirplaneIndex);
-
-            // Déduire le prix
-            main.Capital -= price;
-
-            // Ajouter le nouvel avion
-            manager.Add(new Manager());
-
-            // Régénérer l’affichage
-            GenerateManagerViews();
-            UpdateButtonsState();
-        }
+        
         public void UpdateButtonsState()
         {
             var main = Application.Current.MainWindow as MainWindow;
 
-            foreach (var manager in manager)
+            foreach (var manager in managers)
             {
                 // multiplier speed
                 manager.CanUpgradeMultiplierSpeed = main.Capital >= manager.MultiplierSpeedPrice;
@@ -89,11 +73,11 @@ namespace Airline_Tycoon
             // Raffraîchit l’écran
             foreach (var child in ListContainer.Children.OfType<ManagerItem>())
             {
-                child.RefreshStat  e();
+                child.RefreshState();
             }
 
             // --- NOUVEAU : met à jour le bouton Buy Airplane ---
-            int nextIndex = manager.Count + 1;
+            int nextIndex = managers.Count + 1;
             BigInteger price = GetManagerPrice(nextIndex);
             AddManagerButton.IsEnabled = main.Capital >= price;
             AddManagerButton.Opacity = AddManagerButton.IsEnabled ? 1.0 : 0.5;
@@ -109,6 +93,7 @@ namespace Airline_Tycoon
 
             // Met à jour le prix affiché
             NextManagerPriceText.Text = $"${NumberFormatter.Format(price)}";
+            AddManagerButton.IsEnabled = main.Capital >= GetManagerPrice(managers.Count + 1);
         }
         private BigInteger GetManagerPrice(int managerIndex)
         {
@@ -116,15 +101,33 @@ namespace Airline_Tycoon
             // airplaneIndex = numéro du prochain avion (1 pour le premier, 2 pour le deuxième, etc.)
             switch (managerIndex)
             {
-                case 1: return 0;        // déjà offert ou premier gratuit
-                case 2: return 0;        // deuxième offert ?
-                case 3: return 5000;
-                case 4: return 15000;
-                case 5: return 50000;
+                case 1: return 5000;
+                case 2: return 15000;
+                case 3: return 50000;
                 default:
                     // Pour les suivants, prix = 3x prix du précédent (ou n’importe quelle formule)
                     return 3 * GetManagerPrice(managerIndex - 1);
             }
+        }
+
+        private void AddManagerButton_Click( object sender, RoutedEventArgs e )
+        {
+            var main = Application.Current.MainWindow as MainWindow;
+            if(main == null) return;
+
+            int nextIndex = managers.Count + 1;
+            BigInteger price = GetManagerPrice(nextIndex);
+
+            if(main.Capital < price) return; // pas assez d’argent
+
+            main.Capital -= price;
+
+            // Ajouter le nouveau manager
+            managers.Add(new Manager());
+
+            // Régénérer l’affichage
+            GenerateManagerViews();
+            UpdateButtonsState();
         }
     }
 }

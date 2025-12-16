@@ -25,19 +25,6 @@ namespace Airline_Tycoon
 
     public class AirportData
     {
-        //public string CityName { get; set; }
-        //public Vector2 Position { get; set; }
-        //public List<FlightRequest> Requests { get; set; } = new List<FlightRequest>();
-        //public int Capacity { get; set; } = 100;
-        //public float ArrivalSpeed { get; set; } = 5f;
-        //public float TicketMultiplier { get; set; } = 1.0f;
-
-        //public AirportData( string name, Vector2 position )
-        //{
-        //    CityName = name;
-        //    Position = position;
-        //}
-
         public string CityName { get; set; }
         public Vector2 Position { get; set; }
         public List<FlightRequest> Requests { get; set; } = new List<FlightRequest>();
@@ -74,6 +61,7 @@ namespace Airline_Tycoon
             Id = id;
             Name = name;
             CurrentAirport = startAirport;
+            TargetAirport = startAirport;
             Position = startAirport.Position;
             PlaneColor = color;
 
