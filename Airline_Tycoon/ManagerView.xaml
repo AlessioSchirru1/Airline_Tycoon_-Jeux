@@ -9,17 +9,14 @@
 
         <StackPanel x:Name="ListContainer"
                 Margin="20 20 0 20">
-
-            <Button x:Name="AddAirplaneButton"
+            <Button x:Name="AddManagerButton"
                 Height="60"
-                Margin="0 20 0 0"
                 Background="#444"
                 Foreground="White"
                 Width="393"
-                HorizontalAlignment="Left"
-                Click="AddAirplaneButton_Click">
+                Click="AddManagerButton_Click">
                 <Button.Resources>
-                    <Style TargetType="Border">
+                    <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius"
                             Value="10" />
                     </Style>
@@ -33,7 +30,7 @@
                            FontWeight="Bold"
                            HorizontalAlignment="Center" />
 
-                    <TextBlock x:Name="NextAirplanePriceText"
+                    <TextBlock x:Name="NextManagerPriceText"
                            Text="$0" />
                 </StackPanel>
 
