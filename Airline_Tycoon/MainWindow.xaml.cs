@@ -50,8 +50,10 @@ namespace Airline_Tycoon
             ticketsView = new TicketsView(); // à créer
             managerView = new ManagerView(); // à créer
             ContentArea.Content = airplanesView;
+            ContentArea.Content = managerView;
 
             currentAirplanesView = airplanesView;
+            currentManagerView = managerView;
         }
 
         private void AirplanesButton_Click( object sender, RoutedEventArgs e )
@@ -65,8 +67,7 @@ namespace Airline_Tycoon
             ToggleContent(ticketsView);
             //currentAirportsView = airportsView;
         }
-        private void ManagerButton_Click( object sender, RoutedEventArgs e ) => ToggleContent(managerView);
-
+        private void ManagerButton_Click(object sender, RoutedEventArgs e) => ToggleContent(managerView);
         private void CloseButton_Click( object sender, RoutedEventArgs e )
         {
             ConfirmationWindow confirm = new ConfirmationWindow();

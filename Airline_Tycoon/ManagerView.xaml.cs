@@ -76,20 +76,17 @@ namespace Airline_Tycoon
 
             foreach (var manager in manager)
             {
-                // Exemple : seats
-                manager.CanUpgradeSeats = main.Capital >= manager.SeatsPrice;
+                // multiplier speed
+                manager.CanUpgradeMultiplierSpeed = main.Capital >= manager.MultiplierSpeedPrice;
 
-                // speed
-                manager.CanUpgradeSpeed = main.Capital >= manager.SpeedPrice;
-
-                // tickets
-                manager.CanUpgradeTickets = main.Capital >= manager.TicketPrice;
+                // multiplier
+                manager.CanUpgradeMultiplier = main.Capital >= manager.MultiplierPrice;
             }
 
             // Raffraîchit l’écran
             foreach (var child in ListContainer.Children.OfType<ManagerItem>())
             {
-                child.RefreshState();
+                child.RefreshStat  e();
             }
 
             // --- NOUVEAU : met à jour le bouton Buy Airplane ---
