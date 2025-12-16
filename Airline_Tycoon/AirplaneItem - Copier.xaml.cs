@@ -48,7 +48,7 @@ namespace Airline_Tycoon
         private void UpdateButtons()
         {
             SeatsButton.IsEnabled = main.Capital >= airplane.SeatsPrice;
-            TicketButton.IsEnabled = main.Capital >= airplane.TicketPrice;
+            TicketButton.IsEnabled = main.Capital >= airplane.AirportsPrice;
             SpeedButton.IsEnabled = main.Capital >= airplane.SpeedPrice;
 
             // Met à jour la couleur du texte en fonction de l'état du bouton
@@ -74,7 +74,7 @@ namespace Airline_Tycoon
             SeatsPriceText.Text = $"${airplane.SeatsPrice}";
 
             TicketValueText.Text = airplane.Ticket.ToString();
-            TicketPriceText.Text = $"${airplane.TicketPrice}";
+            TicketPriceText.Text = $"${airplane.AirportsPrice}";
 
             SpeedValueText.Text = airplane.Speed.ToString();
             SpeedPriceText.Text = $"${airplane.SpeedPrice}";
@@ -97,12 +97,12 @@ namespace Airline_Tycoon
 
         private void TicketButton_Click( object sender, RoutedEventArgs e )
         {
-            if(main.Capital < airplane.TicketPrice)
+            if(main.Capital < airplane.AirportsPrice)
                 return;
 
-            main.Capital -= airplane.TicketPrice;
+            main.Capital -= airplane.AirportsPrice;
             airplane.Ticket++;
-            airplane.TicketPrice += 20;
+            airplane.AirportsPrice += 20;
 
             LoadAirplaneData();
             UpdateButtons();

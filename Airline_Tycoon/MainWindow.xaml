@@ -9,7 +9,6 @@
         WindowStyle="None"
         WindowState="Maximized"
         ResizeMode="NoResize"
-        Topmost="True"
         Width="1920"
         Height="1080">
 
@@ -165,8 +164,8 @@
 
                     <Button Style="{StaticResource MenuButton}"
                             Margin="0,0,40,0"
-                            x:Name="TicketsButton"
-                            Click="TicketsButton_Click">
+                            x:Name="AirportButton"
+                            Click="AirportButton_Click">
                         <Image Width="60"
                                Height="60"
                                Source="/img/ticket.png" />

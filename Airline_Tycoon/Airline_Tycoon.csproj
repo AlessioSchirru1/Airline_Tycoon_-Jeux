@@ -44,4 +44,10 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="AirplaneItem - Copier.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>

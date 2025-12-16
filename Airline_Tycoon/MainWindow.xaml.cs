@@ -32,7 +32,7 @@ namespace Airline_Tycoon
 
         // Références uniques aux panneaux
         private AirplanesView airplanesView;
-        private TicketsView ticketsView;
+        private AirportsView airportsView;
         private ManagerView managerView;
 
         public MainWindow()
@@ -47,10 +47,23 @@ namespace Airline_Tycoon
             Airplanes.Add(new Airplane());
 
             airplanesView = new AirplanesView(Airplanes);
-            ticketsView = new TicketsView(); // à créer
+            airportsView = new AirportsView(Airports); // à créer
             managerView = new ManagerView(); // à créer
             ContentArea.Content = airplanesView;
             ContentArea.Content = managerView;
+
+            // Ajouter tous les UserControls dans ContentArea
+            ContentArea.Content = null;
+            ContentArea.Content = new Grid(); // conteneur pour tous les UserControls
+            var grid = ContentArea.Content as Grid;
+            grid.Children.Add(airplanesView);
+            grid.Children.Add(airportsView);
+            grid.Children.Add(managerView);
+
+            // Cacher tous sauf airplanesView
+            airplanesView.Visibility = Visibility.Visible;
+            airportsView.Visibility = Visibility.Collapsed;
+            managerView.Visibility = Visibility.Collapsed;
 
             currentAirplanesView = airplanesView;
             currentManagerView = managerView;
@@ -62,9 +75,9 @@ namespace Airline_Tycoon
             currentAirplanesView = airplanesView;
         }
 
-        private void TicketsButton_Click( object sender, RoutedEventArgs e )
+        private void AirportButton_Click( object sender, RoutedEventArgs e )
         {
-            ToggleContent(ticketsView);
+            ToggleContent(airportsView);
             //currentAirportsView = airportsView;
         }
         private void ManagerButton_Click(object sender, RoutedEventArgs e) => ToggleContent(managerView);
@@ -82,8 +95,14 @@ namespace Airline_Tycoon
 
         private void ToggleContent( UserControl newContent )
         {
-            if(ContentArea.Content != newContent)
-                ContentArea.Content = newContent;
+            // On cache tous les UserControls
+            foreach(UserControl uc in new UserControl[] { airplanesView, airportsView, managerView })
+            {
+                uc.Visibility = Visibility.Collapsed;
+            }
+
+            // On affiche le nouveau
+            newContent.Visibility = Visibility.Visible;
         }
 
         private void Boutonparametre_Click( object sender, RoutedEventArgs e )
@@ -93,13 +112,13 @@ namespace Airline_Tycoon
             confirm.ShowDialog();
         }
 
-        public event Action CapitalChanged;
+        public event Action? CapitalChanged;
 
         private BigInteger  _capital = 0;
 
         private void AddMoney_Click( object sender, RoutedEventArgs e )
         {
-            Capital += BigInteger.Parse("5000");
+            Capital += BigInteger.Parse("100000000000000");
             UpdateCapitalDisplay();
         }
 

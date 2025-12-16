@@ -23,7 +23,7 @@ namespace Airline_Tycoon
     public partial class AirportsView :UserControl
     {
         private List<Airport> airports;
-        private List<string> Cities = new List<string> { "Paris", "New York", "Tokyo", "London", "Sydney" }; // etc.
+        private List<string> Cities = new List<string> { "Paris", "New York", "Tokyo", "London", "Sydney", "Moscou", "Rome" }; // etc.
 
         public AirportsView( List<Airport> airportList )
         {
@@ -53,19 +53,12 @@ namespace Airline_Tycoon
 
             foreach(var airport in airports)
             {
-                var tb = new TextBlock
-                {
-                    Text = $"{airport.CityName} - ${NumberFormatter.Format(airport.PurchasePrice)}",
-                    FontSize = 20,
-                    Foreground = Brushes.White,
-                    Margin = new Thickness(0,0,0,10)
-                };
-                ListContainer.Children.Add(tb);
+                ListContainer.Children.Add(new AirportItem(airport));
             }
 
-            // Ajouter le bouton Buy Airport en bas
             ListContainer.Children.Add(AddAirportButton);
         }
+
 
         private BigInteger GetNextAirportPrice( int index )
         {
@@ -76,25 +69,65 @@ namespace Airline_Tycoon
         public void UpdateButtonsState()
         {
             var main = Application.Current.MainWindow as MainWindow;
+            if(main == null) return;
 
             int nextIndex = airports.Count;
+            int maxAirports = Cities.Count; // 7
+            bool reachedMax = airports.Count >= maxAirports;
+
             BigInteger price = GetNextAirportPrice(nextIndex);
 
-            bool canBuy = main.Capital >= price;
+            // On ne peut acheter que si on n'a pas atteint la limite ET si on a assez d'argent
+            bool canBuy = !reachedMax && main.Capital >= price;
 
             // Texte du bouton et prix
             AddAirportText.Foreground = canBuy ? Brushes.White : Brushes.Black;
-            NextAirportPriceText.Foreground = canBuy ? Brushes.White : Brushes.Black;
-            NextAirportPriceText.Text = $"${NumberFormatter.Format(price)}";
+            NextAirportPriceText.Foreground = reachedMax ? Brushes.Gray : ( canBuy ? Brushes.White : Brushes.Black );
+            NextAirportPriceText.Text = reachedMax ? "MAX" : $"${NumberFormatter.Format(price)}";
 
-            // Optionnel : changer le fond
+            // Fond du bouton
             AddAirportButton.Background = canBuy ? new SolidColorBrush(Color.FromRgb(68, 68, 68))
                                                  : new SolidColorBrush(Color.FromRgb(30, 30, 30));
+            AddAirportButton.IsEnabled = canBuy;
+
+            foreach(var item in ListContainer.Children.OfType<AirportItem>())
+            {
+                item.RefreshState();
+            }
         }
+
+        //public void UpdateButtonsState()
+        //{
+        //    var main = Application.Current.MainWindow as MainWindow;
+
+        //    int nextIndex = airports.Count;
+        //    BigInteger price = GetNextAirportPrice(nextIndex);
+
+        //    bool canBuy = main.Capital >= price;
+
+        //    // Texte du bouton et prix
+        //    AddAirportText.Foreground = canBuy ? Brushes.White : Brushes.Black;
+        //    NextAirportPriceText.Foreground = canBuy ? Brushes.White : Brushes.Black;
+        //    NextAirportPriceText.Text = $"${NumberFormatter.Format(price)}";
+
+        //    // Optionnel : changer le fond
+        //    AddAirportButton.Background = canBuy ? new SolidColorBrush(Color.FromRgb(68, 68, 68))
+        //                                         : new SolidColorBrush(Color.FromRgb(30, 30, 30));
+
+        //    foreach(var item in ListContainer.Children.OfType<AirportItem>())
+        //    {
+        //        item.RefreshState();
+        //    }
+        //}
 
         private void AddAirportButton_Click( object sender, RoutedEventArgs e )
         {
             var main = Application.Current.MainWindow as MainWindow;
+
+            // Limite des aéroports
+            if(airports.Count >= Cities.Count)
+                return; // on ne peut plus acheter
+
             int nextIndex = airports.Count;
             BigInteger price = GetNextAirportPrice(nextIndex);
 
@@ -104,13 +137,33 @@ namespace Airline_Tycoon
 
             airports.Add(new Airport
             {
-                CityName = Cities[nextIndex % Cities.Count],
+                CityName = Cities[nextIndex],
                 PurchasePrice = price
             });
 
             GenerateAirportViews();
             UpdateButtonsState();
         }
+
+        //private void AddAirportButton_Click( object sender, RoutedEventArgs e )
+        //{
+        //    var main = Application.Current.MainWindow as MainWindow;
+        //    int nextIndex = airports.Count;
+        //    BigInteger price = GetNextAirportPrice(nextIndex);
+
+        //    if(main.Capital < price) return; // pas assez → ne fait rien
+
+        //    main.Capital -= price;
+
+        //    airports.Add(new Airport
+        //    {
+        //        CityName = Cities[nextIndex % Cities.Count],
+        //        PurchasePrice = price
+        //    });
+
+        //    GenerateAirportViews();
+        //    UpdateButtonsState();
+        //}
     }
 
 }
