@@ -19,7 +19,7 @@ namespace Airline_Tycoon
     {
         // Collections
         private MediaPlayer _lecteurMusique = new MediaPlayer();
-        
+
 
         public List<Manager> Managers { get; private set; } = new List<Manager>();
 
@@ -50,7 +50,7 @@ namespace Airline_Tycoon
 
             // Créer les UserControls en passant les listes du GameManager
             airplanesView = new AirplanesView(gameManager.Airplanes, gameManager.Airports);
-            airplanesView = new AirplanesView(gameManager.Airplanes, gameManager.Airports);
+            airportsView = new AirportsView(gameManager.Airports);
             managerView = new ManagerView(gameManager.Managers);
 
             // Conteneur pour tous les UserControls
@@ -86,11 +86,21 @@ namespace Airline_Tycoon
             // ---- Ajouter les aéroports ----
             foreach(var airport in gameManager.Airports)
             {
-                var airportControl = new AirportItem(airport);
+                var airportData = new AirportData( airport.CityName, airport.Position)
+                {
+                    Capacity = airport.Capacity,
+                    ArrivalSpeed = airport.ArrivalSpeed,
+                    TicketMultiplier = (float)airport.TicketMultiplier,
+                    CapacityUpgradePrice = airport.CapacityUpgradePrice,
+                    SpeedUpgradePrice = airport.SpeedUpgradePrice,
+                    MultiplierUpgradePrice = airport.MultiplierUpgradePrice
+                };
+
+                var airportControl = new AirportItem(airportData);
                 MapCanvas.Children.Add(airportControl);
 
-                Canvas.SetLeft(airportControl, airport.Position.X);
-                Canvas.SetTop(airportControl, airport.Position.Y);
+                Canvas.SetLeft(airportControl, airportData.Position.X);
+                Canvas.SetTop(airportControl, airportData.Position.Y);
             }
         }
 
@@ -106,7 +116,7 @@ namespace Airline_Tycoon
             ToggleContent(airportsView);
             //currentAirportsView = airportsView;
         }
-        private void ManagerButton_Click(object sender, RoutedEventArgs e) => ToggleContent(managerView);
+        private void ManagerButton_Click( object sender, RoutedEventArgs e ) => ToggleContent(managerView);
         private void CloseButton_Click( object sender, RoutedEventArgs e )
         {
             ConfirmationWindow confirm = new ConfirmationWindow();
@@ -149,7 +159,7 @@ namespace Airline_Tycoon
         }
 
         public void UpdateCapitalDisplay() => CapitalText.Text = $"${NumberFormatter.Format(Capital)}";
-        
+
 
         public BigInteger Capital
         {
@@ -162,7 +172,7 @@ namespace Airline_Tycoon
             }
         }
 
-        
+
 
         public bool TrySpendMoney( int amount )
         {
@@ -199,7 +209,7 @@ namespace Airline_Tycoon
                 Application.Current.Shutdown();
         }
 
-        private void boutonregle_Click(object sender, RoutedEventArgs e)
+        private void boutonregle_Click( object sender, RoutedEventArgs e )
         {
             regle confirm = new regle();
             confirm.Owner = this;
@@ -213,7 +223,7 @@ namespace Airline_Tycoon
 
                 _lecteurMusique.Open(new Uri(chemin, UriKind.Absolute));
 
-                _lecteurMusique.MediaEnded += (s, e) =>
+                _lecteurMusique.MediaEnded += ( s, e ) =>
                 {
                     _lecteurMusique.Position = TimeSpan.Zero; // Retour au début
                     _lecteurMusique.Play();
@@ -222,12 +232,12 @@ namespace Airline_Tycoon
                 _lecteurMusique.Volume = 0.5; // Volume par défaut à 50%
                 _lecteurMusique.Play();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 MessageBox.Show("Erreur lecture musique : " + ex.Message);
             }
         }
-        public void ModifierVolume(double nouveauVolume)
+        public void ModifierVolume( double nouveauVolume )
         {
             _lecteurMusique.Volume = nouveauVolume;
         }

@@ -22,10 +22,10 @@ namespace Airline_Tycoon
     /// </summary>
     public partial class AirportsView :UserControl
     {
-        private List<Airport> airports;
+        private List<AirportData> airports;
         private List<string> Cities = new List<string> { "London", "New York", "Rome", "Algé", "Sydney", "Moscou", "Tokyo" };
 
-        public AirportsView( List<Airport> airportList )
+        public AirportsView( List<AirportData> airportList )
         {
             InitializeComponent();
             airports = airportList;
@@ -35,27 +35,49 @@ namespace Airline_Tycoon
             // Ajouter 3 aéroports de base si vide
             if(airports.Count == 0)
             {
-                airports.Add(new Airport { CityName = Cities[0], PurchasePrice = 0 });
-                airports.Add(new Airport { CityName = Cities[1], PurchasePrice = 5000 });
-                airports.Add(new Airport { CityName = Cities[2], PurchasePrice = 15000 });
+                //airports.Add(new AirportData { CityName = Cities[0], PurchasePrice = 0 });
+                //airports.Add(new AirportData { CityName = Cities[1], PurchasePrice = 5000 });
+                //airports.Add(new AirportData { CityName = Cities[2], PurchasePrice = 15000 });
+
+                airports.Add(new AirportData(Cities[0], new Vector2(0, 0)));
+                airports.Add(new AirportData(Cities[1], new Vector2(100, 0)));
+                airports.Add(new AirportData(Cities[2], new Vector2(200, 0)));
             }
 
             GenerateAirportViews();
             UpdateButtonsState();
 
             var main = Application.Current.MainWindow as MainWindow;
-            main.CapitalChanged += UpdateButtonsState;
+            if(main != null)
+                main.CapitalChanged += UpdateButtonsState;
         }
 
         private void GenerateAirportViews()
         {
             ListContainer.Children.Clear();
 
+            //foreach(var airport in airports)
+            //{
+            //    // Créer un AirportData à partir de Airport
+            //    var data = new AirportData( airport.CityName,new Vector2(0, 0))
+            //    {
+            //        Capacity = airport.Capacity,
+            //        ArrivalSpeed = airport.ArrivalSpeed,
+            //        TicketMultiplier = (float)airport.TicketMultiplier,
+            //        CapacityUpgradePrice = (BigInteger)airport.CapacityUpgradePrice,
+            //        SpeedUpgradePrice = (BigInteger)airport.SpeedUpgradePrice,
+            //        MultiplierUpgradePrice = (BigInteger)airport.MultiplierUpgradePrice
+            //    };
+
+            //    ListContainer.Children.Add(new AirportItem(data));
+            //}
+
             foreach(var airport in airports)
             {
                 ListContainer.Children.Add(new AirportItem(airport));
             }
 
+            // Bouton d'ajout toujours en bas
             ListContainer.Children.Add(AddAirportButton);
         }
 
@@ -96,30 +118,6 @@ namespace Airline_Tycoon
             }
         }
 
-        //public void UpdateButtonsState()
-        //{
-        //    var main = Application.Current.MainWindow as MainWindow;
-
-        //    int nextIndex = airports.Count;
-        //    BigInteger price = GetNextAirportPrice(nextIndex);
-
-        //    bool canBuy = main.Capital >= price;
-
-        //    // Texte du bouton et prix
-        //    AddAirportText.Foreground = canBuy ? Brushes.White : Brushes.Black;
-        //    NextAirportPriceText.Foreground = canBuy ? Brushes.White : Brushes.Black;
-        //    NextAirportPriceText.Text = $"${NumberFormatter.Format(price)}";
-
-        //    // Optionnel : changer le fond
-        //    AddAirportButton.Background = canBuy ? new SolidColorBrush(Color.FromRgb(68, 68, 68))
-        //                                         : new SolidColorBrush(Color.FromRgb(30, 30, 30));
-
-        //    foreach(var item in ListContainer.Children.OfType<AirportItem>())
-        //    {
-        //        item.RefreshState();
-        //    }
-        //}
-
         private void AddAirportButton_Click( object sender, RoutedEventArgs e )
         {
             var main = Application.Current.MainWindow as MainWindow;
@@ -135,35 +133,17 @@ namespace Airline_Tycoon
 
             main.Capital -= price;
 
-            airports.Add(new Airport
-            {
-                CityName = Cities[nextIndex],
-                PurchasePrice = price
-            });
+            airports.Add(new AirportData(Cities[nextIndex], new Vector2(nextIndex * 100, 0)));
+
+            //airports.Add(new AirportData
+            //{
+            //    CityName = Cities[nextIndex],
+            //    PurchasePrice = price
+            //});
 
             GenerateAirportViews();
             UpdateButtonsState();
         }
-
-        //private void AddAirportButton_Click( object sender, RoutedEventArgs e )
-        //{
-        //    var main = Application.Current.MainWindow as MainWindow;
-        //    int nextIndex = airports.Count;
-        //    BigInteger price = GetNextAirportPrice(nextIndex);
-
-        //    if(main.Capital < price) return; // pas assez → ne fait rien
-
-        //    main.Capital -= price;
-
-        //    airports.Add(new Airport
-        //    {
-        //        CityName = Cities[nextIndex % Cities.Count],
-        //        PurchasePrice = price
-        //    });
-
-        //    GenerateAirportViews();
-        //    UpdateButtonsState();
-        //}
     }
 
 }
