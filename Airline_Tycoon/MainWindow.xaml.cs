@@ -22,9 +22,12 @@ namespace Airline_Tycoon
         public List<Airplane> Airplanes { get; private set; } = new List<Airplane>();
         public List<Airport> Airports { get; private set; } = new List<Airport>();
 
+        public List<Manager> Managers { get; private set; } = new List<Manager>();
+
 
         private AirplanesView currentAirplanesView;
         //airportsView = new AirportsView( Airports);
+        private ManagerView currentManagerView;
 
 
         // Références uniques aux panneaux

@@ -4,9 +4,41 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Airline_Tycoon"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+             mc:Ignorable="d">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+
+        <StackPanel x:Name="ListContainer"
+                Margin="20 20 0 20">
+
+            <Button x:Name="AddAirplaneButton"
+                Height="60"
+                Margin="0 20 0 0"
+                Background="#444"
+                Foreground="White"
+                Width="393"
+                HorizontalAlignment="Left"
+                Click="AddAirplaneButton_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius"
+                            Value="10" />
+                    </Style>
+                </Button.Resources>
+
+                <StackPanel>
+
+
+                    <TextBlock Text="Buy new manager airport"
+                           FontSize="20"
+                           FontWeight="Bold"
+                           HorizontalAlignment="Center" />
+
+                    <TextBlock x:Name="NextAirplanePriceText"
+                           Text="$0" />
+                </StackPanel>
+
+            </Button>
+
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

@@ -20,6 +20,7 @@ namespace Airline_Tycoon
     /// </summary>
     public partial class ManagerView : UserControl
     {
+        private List<Airplane> airplanes;
         public ManagerView()
         {
             InitializeComponent();
