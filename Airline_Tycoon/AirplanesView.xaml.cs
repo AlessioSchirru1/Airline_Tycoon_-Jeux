@@ -71,62 +71,114 @@ namespace Airline_Tycoon
         {
             var main = Application.Current.MainWindow as MainWindow;
 
-            int nextAirplaneIndex = airplanes.Count + 1;
-            BigInteger price = GetAirplanePrice(nextAirplaneIndex);
+            int maxAirplanes = 12;
+            if(airplanes.Count >= maxAirplanes) return; // limite atteinte
 
-            // Déduire le prix
+            int nextIndex = airplanes.Count;
+            BigInteger price = GetNextAirplanePrice(nextIndex);
+
+            if(main.Capital < price) return; // pas assez d'argent
+
             main.Capital -= price;
 
-            // Ajouter le nouvel avion
-            airplanes.Add(new Airplane());
+            airplanes.Add(new Airplane
+            {
+                Name = $"Airplane {nextIndex + 1}",
+                PurchasePrice = price
+            });
 
-            // Régénérer l’affichage
             GenerateAirplaneViews();
             UpdateButtonsState();
         }
 
+        //private void AddAirplaneButton_Click( object sender, RoutedEventArgs e )
+        //{
+        //    var main = Application.Current.MainWindow as MainWindow;
+
+        //    int nextAirplaneIndex = airplanes.Count + 1;
+        //    BigInteger price = GetAirplanePrice(nextAirplaneIndex);
+
+        //    // Déduire le prix
+        //    main.Capital -= price;
+
+        //    // Ajouter le nouvel avion
+        //    airplanes.Add(new Airplane());
+
+        //    // Régénérer l’affichage
+        //    GenerateAirplaneViews();
+        //    UpdateButtonsState();
+        //}
+
         public void UpdateButtonsState()
         {
             var main = Application.Current.MainWindow as MainWindow;
+            if(main == null) return;
 
-            foreach(var plane in airplanes)
+            int maxAirplanes = 12;
+            int nextIndex = airplanes.Count;
+            bool reachedMax = airplanes.Count >= maxAirplanes;
+
+            BigInteger price = GetNextAirplanePrice(nextIndex); // tu dois avoir une méthode similaire à GetNextAirportPrice
+
+            bool canBuy = !reachedMax && main.Capital >= price;
+
+            // Texte et couleur du bouton
+            AddAirplaneText.Foreground = canBuy ? Brushes.White : Brushes.Black;
+            NextAirplanePriceText.Foreground = reachedMax ? Brushes.Gray : ( canBuy ? Brushes.White : Brushes.Black );
+            NextAirplanePriceText.Text = reachedMax ? "MAX" : $"${NumberFormatter.Format(price)}";
+
+            AddAirplaneButton.Background = canBuy ? new SolidColorBrush(Color.FromRgb(68, 68, 68))
+                                                  : new SolidColorBrush(Color.FromRgb(30, 30, 30));
+            AddAirplaneButton.IsEnabled = canBuy;
+
+            foreach(var item in ListContainer.Children.OfType<AirplaneItem>())
             {
-                // Exemple : seats
-                plane.CanUpgradeSeats = main.Capital >= plane.SeatsPrice;
-
-                // speed
-                plane.CanUpgradeSpeed = main.Capital >= plane.SpeedPrice;
-
-                // tickets
-                plane.CanUpgradeTickets = main.Capital >= plane.TicketPrice;
+                item.RefreshState();
             }
-
-            // Raffraîchit l’écran
-            foreach(var child in ListContainer.Children.OfType<AirplaneItem>())
-            {
-                child.RefreshState();
-            }
-
-            // --- NOUVEAU : met à jour le bouton Buy Airplane ---
-            int nextIndex = airplanes.Count + 1;
-            BigInteger price = GetAirplanePrice(nextIndex);
-            AddAirplaneButton.IsEnabled = main.Capital >= price;
-            AddAirplaneButton.Opacity = AddAirplaneButton.IsEnabled ? 1.0 : 0.5;
-
-            // Met à jour le texte à l'intérieur du bouton
-            if(AddAirplaneButton.Content is StackPanel stack)
-            {
-                foreach(var child in stack.Children.OfType<TextBlock>())
-                {
-                    child.Foreground = AddAirplaneButton.IsEnabled ? Brushes.White : Brushes.Black;
-                }
-            }
-
-            // Met à jour le prix affiché
-            NextAirplanePriceText.Text = $"${NumberFormatter.Format(price)}";
-
-
         }
+
+        //public void UpdateButtonsState()
+        //{
+        //    var main = Application.Current.MainWindow as MainWindow;
+
+        //    foreach(var plane in airplanes)
+        //    {
+        //        // Exemple : seats
+        //        plane.CanUpgradeSeats = main.Capital >= plane.SeatsPrice;
+
+        //        // speed
+        //        plane.CanUpgradeSpeed = main.Capital >= plane.SpeedPrice;
+
+        //        // tickets
+        //        plane.CanUpgradeAirports = main.Capital >= plane.AirportsPrice;
+        //    }
+
+        //    // Raffraîchit l’écran
+        //    foreach(var child in ListContainer.Children.OfType<AirplaneItem>())
+        //    {
+        //        child.RefreshState();
+        //    }
+
+        //    // --- NOUVEAU : met à jour le bouton Buy Airplane ---
+        //    int nextIndex = airplanes.Count + 1;
+        //    BigInteger price = GetAirplanePrice(nextIndex);
+        //    AddAirplaneButton.IsEnabled = main.Capital >= price;
+        //    AddAirplaneButton.Opacity = AddAirplaneButton.IsEnabled ? 1.0 : 0.5;
+
+        //    // Met à jour le texte à l'intérieur du bouton
+        //    if(AddAirplaneButton.Content is StackPanel stack)
+        //    {
+        //        foreach(var child in stack.Children.OfType<TextBlock>())
+        //        {
+        //            child.Foreground = AddAirplaneButton.IsEnabled ? Brushes.White : Brushes.Black;
+        //        }
+        //    }
+
+        //    // Met à jour le prix affiché
+        //    NextAirplanePriceText.Text = $"${NumberFormatter.Format(price)}";
+
+
+        //}
 
         private BigInteger GetAirplanePrice( int airplaneIndex )
         {
@@ -143,6 +195,11 @@ namespace Airline_Tycoon
                     // Pour les suivants, prix = 3x prix du précédent (ou n’importe quelle formule)
                     return 3 * GetAirplanePrice(airplaneIndex - 1);
             }
+        }
+
+        private BigInteger GetNextAirplanePrice( int nextIndex )
+        {
+            return GetAirplanePrice(nextIndex + 1);
         }
 
     }

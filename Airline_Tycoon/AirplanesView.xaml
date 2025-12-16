@@ -27,6 +27,7 @@
                     
 
                     <TextBlock Text="+ Buy New Airplane"
+                               x:Name="AddAirplaneText"
                                FontSize="20"
                                FontWeight="Bold"
                                HorizontalAlignment="Center" />
