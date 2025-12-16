@@ -18,12 +18,16 @@ namespace Airline_Tycoon
     public partial class MainWindow :Window
     {
         // Collections
+        private MediaPlayer _lecteurMusique = new MediaPlayer();
         public List<Airplane> Airplanes { get; private set; } = new List<Airplane>();
         public List<Airport> Airports { get; private set; } = new List<Airport>();
+
+        public List<Manager> Managers { get; private set; } = new List<Manager>();
 
 
         private AirplanesView currentAirplanesView;
         //airportsView = new AirportsView( Airports);
+        private ManagerView currentManagerView;
 
 
         // Références uniques aux panneaux
@@ -34,6 +38,8 @@ namespace Airline_Tycoon
         public MainWindow()
         {
             InitializeComponent();
+            DemarrerMusique();
+
 
             this.PreviewKeyDown += MainWindow_PreviewKeyDown;
 
@@ -44,6 +50,7 @@ namespace Airline_Tycoon
             airportsView = new AirportsView(Airports); // à créer
             managerView = new ManagerView(); // à créer
             ContentArea.Content = airplanesView;
+            ContentArea.Content = managerView;
 
             // Ajouter tous les UserControls dans ContentArea
             ContentArea.Content = null;
@@ -59,6 +66,7 @@ namespace Airline_Tycoon
             managerView.Visibility = Visibility.Collapsed;
 
             currentAirplanesView = airplanesView;
+            currentManagerView = managerView;
         }
 
         private void AirplanesButton_Click( object sender, RoutedEventArgs e )
@@ -72,8 +80,7 @@ namespace Airline_Tycoon
             ToggleContent(airportsView);
             //currentAirportsView = airportsView;
         }
-        private void ManagerButton_Click( object sender, RoutedEventArgs e ) => ToggleContent(managerView);
-
+        private void ManagerButton_Click(object sender, RoutedEventArgs e) => ToggleContent(managerView);
         private void CloseButton_Click( object sender, RoutedEventArgs e )
         {
             ConfirmationWindow confirm = new ConfirmationWindow();
@@ -100,7 +107,7 @@ namespace Airline_Tycoon
 
         private void Boutonparametre_Click( object sender, RoutedEventArgs e )
         {
-            parametre confirm = new parametre();
+            parametre confirm = new parametre(this);
             confirm.Owner = this;
             confirm.ShowDialog();
         }
@@ -166,5 +173,37 @@ namespace Airline_Tycoon
                 Application.Current.Shutdown();
         }
 
+        private void boutonregle_Click(object sender, RoutedEventArgs e)
+        {
+            regle confirm = new regle();
+            confirm.Owner = this;
+            confirm.ShowDialog();
+        }
+        private void DemarrerMusique()
+        {
+            try
+            {
+                string chemin = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "musique", "musique.mp3");
+
+                _lecteurMusique.Open(new Uri(chemin, UriKind.Absolute));
+
+                _lecteurMusique.MediaEnded += (s, e) =>
+                {
+                    _lecteurMusique.Position = TimeSpan.Zero; // Retour au début
+                    _lecteurMusique.Play();
+                };
+
+                _lecteurMusique.Volume = 0.5; // Volume par défaut à 50%
+                _lecteurMusique.Play();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lecture musique : " + ex.Message);
+            }
+        }
+        public void ModifierVolume(double nouveauVolume)
+        {
+            _lecteurMusique.Volume = nouveauVolume;
+        }
     }
 }

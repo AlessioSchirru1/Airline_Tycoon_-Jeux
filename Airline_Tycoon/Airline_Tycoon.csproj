@@ -16,6 +16,7 @@
     <None Remove="img\utilisateur.png" />
     <None Remove="img\vitesse.png" />
     <None Remove="img\wave-sound.png" />
+    <None Remove="musique\musique.mp3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="img\regle.png">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Resource>
     <Resource Include="img\utilisateur.png" />
   </ItemGroup>
 
@@ -35,6 +39,9 @@
     <Resource Include="img\vitesse.png" />
     <Resource Include="img\wave-sound.png" />
     <Resource Include="img\world_map.jpg" />
+    <Content Include="musique\musique.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

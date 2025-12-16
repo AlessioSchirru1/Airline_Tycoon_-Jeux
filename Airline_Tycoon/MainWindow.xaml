@@ -85,7 +85,15 @@
                                 Click="CloseButton_Click">
                             <Border Width="20"
                                     Height="20"
-                                    Background="#FFFFFF">
+                                    Background="#FFFFFF" RenderTransformOrigin="0.5,0.5">
+                                <Border.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="83.916"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Border.RenderTransform>
                                 <Border.OpacityMask>
                                     <ImageBrush ImageSource="/img/close.png" />
                                 </Border.OpacityMask>
@@ -107,10 +115,10 @@
                             </Border>
                         </Button>
 
-                        <Button Style="{StaticResource MenuButton}"
+                        <Button x:Name="boutonregle" Style="{StaticResource MenuButton}"
                                 Width="40"
                                 Height="40"
-                                Margin="0, 0, 0, 0">
+                                Margin="0, 0, 0, 0" Click="boutonregle_Click">
                             <Border Width="40"
                                     Height="40"
                                     Background="#FFFFFF">
