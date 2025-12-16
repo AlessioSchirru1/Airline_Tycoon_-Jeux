@@ -23,20 +23,16 @@ namespace Airline_Tycoon
     /// </summary>
     public partial class AirplanesView :UserControl
     {
-        private List<Airplane> airplanes;
+        private List<AirplaneData> airplanes;
+        private List<AirportData> airports;
 
 
-        public AirplanesView( List<Airplane> airplaneList )
+        public AirplanesView( List<AirplaneData> airplaneList, List<AirportData> airportList )
         {
             InitializeComponent();
             airplanes = airplaneList;
 
-            // Ajouter 2 avions de base si la liste est vide
-            if(airplanes.Count == 0)
-            {
-                airplanes.Add(new Airplane());
-                airplanes.Add(new Airplane());
-            }
+            
 
             GenerateAirplaneViews();
 
@@ -51,9 +47,9 @@ namespace Airline_Tycoon
             ListContainer.Children.Clear();
 
             int index = 1;
-            foreach(var plane in airplanes)
+            foreach(var planeData in airplanes)
             {
-                ListContainer.Children.Add(new AirplaneItem(plane, index));
+                ListContainer.Children.Add(new AirplaneItem(planeData, index));
                 index++;
             }
 
@@ -67,9 +63,12 @@ namespace Airline_Tycoon
 
         private int airplaneCount = 0;
 
+        
+
         private void AddAirplaneButton_Click( object sender, RoutedEventArgs e )
         {
             var main = Application.Current.MainWindow as MainWindow;
+            if(main == null) return;
 
             int maxAirplanes = 12;
             if(airplanes.Count >= maxAirplanes) return; // limite atteinte
@@ -78,36 +77,23 @@ namespace Airline_Tycoon
             BigInteger price = GetNextAirplanePrice(nextIndex);
 
             if(main.Capital < price) return; // pas assez d'argent
-
             main.Capital -= price;
 
-            airplanes.Add(new Airplane
-            {
-                Name = $"Airplane {nextIndex + 1}",
-                PurchasePrice = price
-            });
+            // Choisir un aéroport de départ (ici le premier disponible)
+            AirportData startingAirport = airports.FirstOrDefault();
+            if(startingAirport == null) return; // pas d'aéroport dispo
+
+            // Créer un nouvel avion avec le constructeur obligatoire
+            int newId = airplanes.Count + 1;
+            string defaultColor = "White"; // ou une couleur par défaut
+            AirplaneData newPlane = new AirplaneData(newId, $"Airplane {newId}", startingAirport, defaultColor);
+
+            airplanes.Add(newPlane);
 
             GenerateAirplaneViews();
             UpdateButtonsState();
         }
 
-        //private void AddAirplaneButton_Click( object sender, RoutedEventArgs e )
-        //{
-        //    var main = Application.Current.MainWindow as MainWindow;
-
-        //    int nextAirplaneIndex = airplanes.Count + 1;
-        //    BigInteger price = GetAirplanePrice(nextAirplaneIndex);
-
-        //    // Déduire le prix
-        //    main.Capital -= price;
-
-        //    // Ajouter le nouvel avion
-        //    airplanes.Add(new Airplane());
-
-        //    // Régénérer l’affichage
-        //    GenerateAirplaneViews();
-        //    UpdateButtonsState();
-        //}
 
         public void UpdateButtonsState()
         {
@@ -136,49 +122,6 @@ namespace Airline_Tycoon
                 item.RefreshState();
             }
         }
-
-        //public void UpdateButtonsState()
-        //{
-        //    var main = Application.Current.MainWindow as MainWindow;
-
-        //    foreach(var plane in airplanes)
-        //    {
-        //        // Exemple : seats
-        //        plane.CanUpgradeSeats = main.Capital >= plane.SeatsPrice;
-
-        //        // speed
-        //        plane.CanUpgradeSpeed = main.Capital >= plane.SpeedPrice;
-
-        //        // tickets
-        //        plane.CanUpgradeAirports = main.Capital >= plane.AirportsPrice;
-        //    }
-
-        //    // Raffraîchit l’écran
-        //    foreach(var child in ListContainer.Children.OfType<AirplaneItem>())
-        //    {
-        //        child.RefreshState();
-        //    }
-
-        //    // --- NOUVEAU : met à jour le bouton Buy Airplane ---
-        //    int nextIndex = airplanes.Count + 1;
-        //    BigInteger price = GetAirplanePrice(nextIndex);
-        //    AddAirplaneButton.IsEnabled = main.Capital >= price;
-        //    AddAirplaneButton.Opacity = AddAirplaneButton.IsEnabled ? 1.0 : 0.5;
-
-        //    // Met à jour le texte à l'intérieur du bouton
-        //    if(AddAirplaneButton.Content is StackPanel stack)
-        //    {
-        //        foreach(var child in stack.Children.OfType<TextBlock>())
-        //        {
-        //            child.Foreground = AddAirplaneButton.IsEnabled ? Brushes.White : Brushes.Black;
-        //        }
-        //    }
-
-        //    // Met à jour le prix affiché
-        //    NextAirplanePriceText.Text = $"${NumberFormatter.Format(price)}";
-
-
-        //}
 
         private BigInteger GetAirplanePrice( int airplaneIndex )
         {

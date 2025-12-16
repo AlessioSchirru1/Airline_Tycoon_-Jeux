@@ -22,10 +22,10 @@ namespace Airline_Tycoon
     /// </summary>
     public partial class AirportItem :UserControl
     {
-        private Airport airport;
+        private AirportData airport;
         private MainWindow main;
 
-        public AirportItem( Airport airportModel )
+        public AirportItem( AirportData airportModel )
         {
             InitializeComponent();
 
@@ -104,7 +104,7 @@ namespace Airline_Tycoon
             if(main.Capital < airport.MultiplierUpgradePrice) return;
 
             main.Capital -= airport.MultiplierUpgradePrice;
-            airport.TicketMultiplier += 0.1;
+            airport.TicketMultiplier += 0.1f;
             airport.MultiplierUpgradePrice += 5000;
 
             LoadAirportData();

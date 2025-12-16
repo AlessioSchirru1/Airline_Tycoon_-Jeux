@@ -22,10 +22,10 @@ namespace Airline_Tycoon
     /// </summary>
     public partial class AirplaneItem :UserControl
     {
-        private Airplane airplane;
+        private AirplaneData airplane;
         private MainWindow main;
 
-        public AirplaneItem( Airplane airplaneModel , int index)
+        public AirplaneItem( AirplaneData airplaneModel , int index)
         {
 
             InitializeComponent();

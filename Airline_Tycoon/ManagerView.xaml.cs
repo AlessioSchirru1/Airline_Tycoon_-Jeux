@@ -22,10 +22,13 @@ namespace Airline_Tycoon
     public partial class ManagerView : UserControl
     {
         private List<Manager> manager;
+
         public ManagerView(List<Manager> managerList)
         {
             InitializeComponent();
             manager = managerList;
+
+            //managerView = new ManagerView(gameManager.Managers);
 
             GenerateManagerViews();
 

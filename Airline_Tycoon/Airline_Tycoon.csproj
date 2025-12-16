@@ -45,7 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="AirplaneItem - Copier.xaml.cs">
+    <Compile Update="AirplaneItem.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

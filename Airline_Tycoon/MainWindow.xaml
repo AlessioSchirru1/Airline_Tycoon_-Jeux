@@ -33,6 +33,9 @@
                 <Image Source="/img/world_map.jpg"
                        Stretch="UniformToFill" />
 
+                <Canvas x:Name="MapCanvas"
+                        Background="Transparent" />
+
                 <Border Grid.Row="0"
                         Background="#303030"
                         CornerRadius="10"

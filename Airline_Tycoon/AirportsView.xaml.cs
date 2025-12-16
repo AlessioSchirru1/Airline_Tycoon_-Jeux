@@ -23,7 +23,7 @@ namespace Airline_Tycoon
     public partial class AirportsView :UserControl
     {
         private List<Airport> airports;
-        private List<string> Cities = new List<string> { "Paris", "New York", "Tokyo", "London", "Sydney", "Moscou", "Rome" }; // etc.
+        private List<string> Cities = new List<string> { "London", "New York", "Rome", "Algé", "Sydney", "Moscou", "Tokyo" };
 
         public AirportsView( List<Airport> airportList )
         {

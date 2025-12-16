@@ -19,10 +19,12 @@ namespace Airline_Tycoon
     {
         // Collections
         private MediaPlayer _lecteurMusique = new MediaPlayer();
-        public List<Airplane> Airplanes { get; private set; } = new List<Airplane>();
-        public List<Airport> Airports { get; private set; } = new List<Airport>();
+        
 
         public List<Manager> Managers { get; private set; } = new List<Manager>();
+
+        private Dictionary<AirplaneData, AirplaneItem> airplaneControls = new();
+
 
 
         private AirplanesView currentAirplanesView;
@@ -35,26 +37,25 @@ namespace Airline_Tycoon
         private AirportsView airportsView;
         private ManagerView managerView;
 
+        private GameManager gameManager;
+
         public MainWindow()
         {
             InitializeComponent();
             DemarrerMusique();
 
-
             this.PreviewKeyDown += MainWindow_PreviewKeyDown;
 
-            Airplanes.Add(new Airplane());
-            Airplanes.Add(new Airplane());
+            // Initialiser GameManager en premier
+            gameManager = new GameManager();
 
-            airplanesView = new AirplanesView(Airplanes);
-            airportsView = new AirportsView(Airports); // à créer
-            managerView = new ManagerView(); // à créer
-            ContentArea.Content = airplanesView;
-            ContentArea.Content = managerView;
+            // Créer les UserControls en passant les listes du GameManager
+            airplanesView = new AirplanesView(gameManager.Airplanes, gameManager.Airports);
+            airplanesView = new AirplanesView(gameManager.Airplanes, gameManager.Airports);
+            //managerView = new ManagerView(gameManager.Managers);
 
-            // Ajouter tous les UserControls dans ContentArea
-            ContentArea.Content = null;
-            ContentArea.Content = new Grid(); // conteneur pour tous les UserControls
+            // Conteneur pour tous les UserControls
+            ContentArea.Content = new Grid();
             var grid = ContentArea.Content as Grid;
             grid.Children.Add(airplanesView);
             grid.Children.Add(airportsView);
@@ -67,7 +68,33 @@ namespace Airline_Tycoon
 
             currentAirplanesView = airplanesView;
             currentManagerView = managerView;
+
+            // Mettre à jour le capital
+            Capital = gameManager.Capital;
+
+            // ---- Ajouter les avions sur la carte ----
+            foreach(var airplane in gameManager.Airplanes)
+            {
+                var airplaneControl = new AirplaneItem(airplane, airplane.Id);
+                MapCanvas.Children.Add(airplaneControl);
+
+                Canvas.SetLeft(airplaneControl, airplane.CurrentAirport.Position.X);
+                Canvas.SetTop(airplaneControl, airplane.CurrentAirport.Position.Y);
+
+                airplaneControls[airplane] = airplaneControl;
+            }
+
+            // ---- Ajouter les aéroports ----
+            foreach(var airport in gameManager.Airports)
+            {
+                var airportControl = new AirportItem(airport);
+                MapCanvas.Children.Add(airportControl);
+
+                Canvas.SetLeft(airportControl, airport.Position.X);
+                Canvas.SetTop(airportControl, airport.Position.Y);
+            }
         }
+
 
         private void AirplanesButton_Click( object sender, RoutedEventArgs e )
         {
@@ -204,6 +231,46 @@ namespace Airline_Tycoon
         public void ModifierVolume(double nouveauVolume)
         {
             _lecteurMusique.Volume = nouveauVolume;
+        }
+
+        public async Task MoveAirplaneToDestination( AirplaneData airplane )
+        {
+            if(!airplaneControls.ContainsKey(airplane)) return;
+
+            var control = airplaneControls[airplane];
+            Vector2 start = airplane.Position;
+            Vector2 end = airplane.TargetAirport.Position;
+
+            float speed = airplane.Speed; // pixels par frame
+            Vector2 direction = end - start;
+            float distance = direction.Length();
+
+            if(distance == 0) return;
+
+            direction /= distance; // normaliser
+
+            float traveled = 0;
+
+            while(traveled < distance)
+            {
+                // déplace l’avion
+                start += direction * speed;
+                traveled += speed;
+
+                airplane.Position = start;
+
+                Canvas.SetLeft(control, airplane.Position.X);
+                Canvas.SetTop(control, airplane.Position.Y);
+
+                await Task.Delay(16); // ~60 FPS
+            }
+
+            // Arrivé à destination
+            airplane.Position = end;
+            Canvas.SetLeft(control, end.X);
+            Canvas.SetTop(control, end.Y);
+
+            // On peut ici créditer le revenu, retirer les passagers, etc.
         }
     }
 }
