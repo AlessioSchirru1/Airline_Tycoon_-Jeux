@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,9 +21,39 @@ namespace Airline_Tycoon
     /// </summary>
     public partial class ManagerItem : UserControl
     {
-        public ManagerItem()
+        private Manager manager;
+        private MainWindow main;
+        public ManagerItem(Manager managerModel, int index)
         {
             InitializeComponent();
+            // On enregistre l'objet avion
+            manager = managerModel;
+
+            main = Application.Current.MainWindow as MainWindow;
+            if (main == null)
+                throw new InvalidOperationException("MainWindow n'est pas encore initialisée.");
+
+            // On met le titre correct
+            TitleText.Text = $"Manager {index}";
+
+            // On charge les valeurs dans l'affichage
+            LoadAirplaneData();
+            UpdateButtons();
+        }
+        private void UpdateButtons()
+        {
+            MultiplierSpeedButton.IsEnabled = main.Capital >= manager.MultiplierSpeedPrice;
+            MultiplierButton.IsEnabled = main.Capital >= manager.MultiplierPrice;
+
+            // Met à jour la couleur du texte en fonction de l'état du bouton
+            MutliplierSpeedValueText.Foreground = SeatsButton.IsEnabled ? Brushes.White : Brushes.Black;
+            SeatsPriceText.Foreground = SeatsButton.IsEnabled ? Brushes.White : Brushes.Black;
+
+            TicketValueText.Foreground = TicketButton.IsEnabled ? Brushes.White : Brushes.Black;
+            TicketPriceText.Foreground = TicketButton.IsEnabled ? Brushes.White : Brushes.Black;
+
+            SpeedValueText.Foreground = SpeedButton.IsEnabled ? Brushes.White : Brushes.Black;
+            SpeedPriceText.Foreground = SpeedButton.IsEnabled ? Brushes.White : Brushes.Black;
         }
     }
 }
