@@ -124,6 +124,17 @@ namespace Airline_Tycoon
             GenerateAirportViews();
             UpdateButtonsState();
         }
+
+        public void RefreshAll()
+        {
+            float deltaSeconds = 0.5f; // intervalle du DispatcherTimer
+
+            foreach(var item in ListContainer.Children.OfType<AirportItem>())
+            {
+                item.UpdatePassengers(deltaSeconds);
+                item.RefreshState(); // pour mettre à jour boutons et textes
+            }
+        }
     }
 
 }

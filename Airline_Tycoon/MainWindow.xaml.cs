@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Numerics;
+using System.Windows.Threading;
 
 namespace Airline_Tycoon
 {
@@ -17,6 +18,7 @@ namespace Airline_Tycoon
     /// </summary>
     public partial class MainWindow :Window
     {
+        private DispatcherTimer gameTimer;
         // Collections
         private MediaPlayer _lecteurMusique = new MediaPlayer();
 
@@ -93,6 +95,8 @@ namespace Airline_Tycoon
                 Canvas.SetLeft(mapItem, airport.Position.X);
                 Canvas.SetTop(mapItem, airport.Position.Y);
             }
+
+            InitGameTimer();
         }
 
 
@@ -271,6 +275,23 @@ namespace Airline_Tycoon
             Canvas.SetTop(control, end.Y);
 
             // On peut ici créditer le revenu, retirer les passagers, etc.
+        }
+
+        private void InitGameTimer()
+        {
+            gameTimer = new DispatcherTimer();
+            gameTimer.Interval = TimeSpan.FromMilliseconds(500); // 0.5 seconde
+            gameTimer.Tick += GameTimer_Tick;
+            gameTimer.Start();
+        }
+
+        private void GameTimer_Tick( object? sender, EventArgs e )
+        {
+            airplanesView.RefreshAll();
+            airportsView.RefreshAll(); // pour les passagers
+
+            // 🔁 Capital (au cas où il change sans clic)
+            UpdateCapitalDisplay();
         }
     }
 }

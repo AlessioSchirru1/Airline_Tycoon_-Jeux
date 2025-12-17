@@ -149,5 +149,13 @@ namespace Airline_Tycoon
             return GetAirplanePrice(nextIndex + 1);
         }
 
+        public void RefreshAll()
+        {
+            foreach(var item in ListContainer.Children.OfType<AirplaneItem>())
+            {
+                item.RefreshState();
+            }
+        }
+
     }
 }

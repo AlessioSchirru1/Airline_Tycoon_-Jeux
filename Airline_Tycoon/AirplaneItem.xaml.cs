@@ -85,18 +85,6 @@ namespace Airline_Tycoon
             AirplaneIcon.Source = new BitmapImage(new Uri(imgPath));
         }
 
-        //private void LoadAirplaneData()
-        //{
-        //    SeatsValueText.Text = airplane.Seats.ToString();
-        //    SeatsPriceText.Text = $"${airplane.SeatsPrice}";
-
-        //    TicketValueText.Text = airplane.Ticket.ToString();
-        //    TicketPriceText.Text = $"${airplane.AirportsPrice}";
-
-        //    SpeedValueText.Text = airplane.Speed.ToString();
-        //    SpeedPriceText.Text = $"${airplane.SpeedPrice}";
-        //}
-
         private void SeatsButton_Click( object sender, RoutedEventArgs e )
         {
             if(main.Capital < airplane.SeatsPrice)

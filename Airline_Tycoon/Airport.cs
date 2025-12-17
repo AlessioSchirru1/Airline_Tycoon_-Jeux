@@ -15,7 +15,7 @@ namespace Airline_Tycoon
         
 
         // Nouvelle logique pour les boutons
-        public int Capacity { get; set; } = 100;
+        public int Capacity { get; set; } = 25;
         public int CapacityUpgradePrice { get; set; } = 5000;
 
         public int ArrivalSpeed { get; set; } = 5; // passagers par seconde

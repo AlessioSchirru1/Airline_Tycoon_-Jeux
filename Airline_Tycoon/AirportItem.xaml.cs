@@ -88,7 +88,8 @@ namespace Airline_Tycoon
             if(main.Capital < airport.CapacityUpgradePrice) return;
 
             main.Capital -= airport.CapacityUpgradePrice;
-            airport.Capacity += 10;
+            airport.Capacity += 25;
+            airport.MaxPassengers = airport.Capacity;
             airport.CapacityUpgradePrice += 5000;
 
             LoadAirportData();
@@ -123,7 +124,36 @@ namespace Airline_Tycoon
         {
             LoadAirportData();
             UpdateButtons();
+            PassengersText.Text = $"{airport.Passengers}/{airport.MaxPassengers}";
+        }
+
+        public void UpdatePassengers( float deltaSeconds )
+        {
+            if(!airport.IsOwned) return;
+
+            airport.Passengers += (int)( airport.PassengerGenerationRate * deltaSeconds );
+            if(airport.Passengers > airport.MaxPassengers)
+                airport.Passengers = airport.MaxPassengers;
+
+            // Mettre à jour le texte
+            PassengersText.Text = $"{airport.Passengers}/{airport.MaxPassengers}";
+        }
+
+        public void GeneratePassengers( float deltaSeconds )
+        {
+            if(!airport.IsOwned) return;
+
+            // Multiplie la vitesse d’arrivée par le delta de temps pour gérer le tick
+            int newPassengers = (int)(airport.ArrivalSpeed * deltaSeconds);
+
+            airport.Passengers += newPassengers;
+
+            // Ne dépasse pas le max
+            if(airport.Passengers > airport.MaxPassengers)
+                airport.Passengers = airport.MaxPassengers;
+
+            // Met à jour le texte
+            PassengersText.Text = $"{airport.Passengers}/{airport.MaxPassengers}";
         }
     }
-
 }

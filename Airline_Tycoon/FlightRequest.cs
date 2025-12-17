@@ -29,8 +29,8 @@ namespace Airline_Tycoon
         public string CityName { get; set; }
         public Vector2 Position { get; set; }
         public List<FlightRequest> Requests { get; set; } = new List<FlightRequest>();
-        public int Capacity { get; set; } = 100;
-        public float ArrivalSpeed { get; set; } = 5f;
+        public int Capacity { get; set; } = 25;
+        public float ArrivalSpeed { get; set; } = 1f;
         public float TicketMultiplier { get; set; } = 1.0f;
 
         // Ajouts pour AirportItem
@@ -42,6 +42,20 @@ namespace Airline_Tycoon
         {
             CityName = name;
             Position = position;
+        }
+
+        public int Passengers { get; set; } = 0;
+        public int MaxPassengers { get; set; } = 25;
+
+        public float PassengerGenerationRate { get; set; } = 1f;
+        // passagers par seconde
+        public int Level { get; set; } = 1;
+
+        public void Upgrade()
+        {
+            Level++;
+            PassengerGenerationRate += 0.5f;
+            MaxPassengers += 25;
         }
     }
 

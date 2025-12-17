@@ -65,12 +65,19 @@
                                            Foreground="White"
                                            FontSize="18"
                                            FontWeight="Bold" />
+                                
                             </StackPanel>
+                            <TextBlock x:Name="PassengersText"
+                                       Margin="0 0 0 0"
+                                       Text="1"
+                                       FontSize="18"
+                                       FontWeight="Bold"
+                                       Foreground="White" />
 
                             <TextBlock x:Name="SeatsPriceText"
-                                       Text="$200"
                                        Foreground="White"
                                        FontSize="16"
+                                       Text="1"
                                        Margin="0 5 0 0"
                                        HorizontalAlignment="Center" />
                         </StackPanel>
@@ -101,16 +108,16 @@
                                        Height="20"
                                        Margin="0 0 5 0" />
                                 <TextBlock x:Name="TicketValueText"
-                                           Text="$18"
                                            Foreground="White"
+                                           Text="1"
                                            FontSize="18"
                                            FontWeight="Bold" />
                             </StackPanel>
 
                             <TextBlock x:Name="TicketPriceText"
-                                       Text="$240"
                                        Foreground="White"
                                        FontSize="16"
+                                       Text="1"
                                        Margin="0 5 0 0"
                                        HorizontalAlignment="Center" />
                         </StackPanel>
@@ -140,16 +147,16 @@
                                        Height="20"
                                        Margin="0 0 5 0" />
                                 <TextBlock x:Name="SpeedValueText"
-                                           Text="100"
                                            Foreground="White"
+                                           Text="1"
                                            FontSize="18"
                                            FontWeight="Bold" />
                             </StackPanel>
 
                             <TextBlock x:Name="SpeedPriceText"
-                                       Text="$100"
                                        Foreground="White"
                                        FontSize="16"
+                                       Text="1"
                                        Margin="0 5 0 0"
                                        HorizontalAlignment="Center" />
                         </StackPanel>

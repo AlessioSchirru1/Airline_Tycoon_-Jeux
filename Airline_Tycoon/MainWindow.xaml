@@ -92,8 +92,7 @@
                                 <Border.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform/>
-                                        <SkewTransform/>
-                                        <RotateTransform Angle="83.916"/>
+                                        <SkewTransform />
                                         <TranslateTransform/>
                                     </TransformGroup>
                                 </Border.RenderTransform>

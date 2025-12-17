@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace Airline_Tycoon
 {
@@ -17,11 +18,17 @@ namespace Airline_Tycoon
         private List<string> airportNames = new List<string>
             { "London", "New York", "Rome", "Alger", "Sydney", "Moscow", "Tokyo" };
 
+        private DispatcherTimer airportTimer;
+
         public GameManager()
         {
             InitializeAirports();
             InitializeAirplanes();
             InitializeFlightRequests();
+            airportTimer = new DispatcherTimer();
+            airportTimer.Interval = TimeSpan.FromSeconds(1);
+            airportTimer.Tick += UpdateAirports;
+            airportTimer.Start();
         }
 
 
@@ -33,10 +40,10 @@ namespace Airline_Tycoon
             new Vector2(490,430),
             new Vector2(280,450),
             new Vector2(520,460),
-            new Vector2(600,400),
-            new Vector2(800,200),
-            new Vector2(700,500),
-            new Vector2(900,100)
+            new Vector2(500,530),
+            new Vector2(870,660),
+            new Vector2(660,420),
+            new Vector2(885,490)
         };
 
         for(int i = 0 ; i < airportNames.Count ; i++)
@@ -79,12 +86,17 @@ namespace Airline_Tycoon
         // Assignation d'un avion à un trajet
         public void AssignAirplane( AirplaneData airplane, FlightRequest request )
         {
+            int usedPassengers = Math.Min( airplane.Seats, airplane.CurrentAirport.Passengers );
+            if(usedPassengers == 0)
+                return; // pas de passagers → pas de vol
+
+            airplane.CurrentAirport.Passengers -= usedPassengers;
+
             airplane.TargetAirport = request.Destination;
-            // Pour test console, on simule l'arrivée immédiate
             airplane.CurrentAirport = request.Destination;
             airplane.Position = request.Destination.Position;
 
-            BigInteger revenue = CalculateRevenue(request, airplane);
+            BigInteger revenue = usedPassengers * airplane.Ticket;
             Capital += revenue;
 
             Console.WriteLine($"{airplane.Name} est allé à {request.Destination.CityName} et a gagné ${revenue} !");
@@ -107,6 +119,19 @@ namespace Airline_Tycoon
             foreach(var plane in Airplanes)
             {
                 Console.WriteLine($"- {plane.Name} à {plane.CurrentAirport.CityName}");
+            }
+        }
+
+        private void UpdateAirports( object sender, EventArgs e )
+        {
+            foreach(var airport in Airports)
+            {
+                if(!airport.IsOwned) continue;
+
+                airport.Passengers += (int)airport.PassengerGenerationRate;
+
+                if(airport.Passengers > airport.MaxPassengers)
+                    airport.Passengers = airport.MaxPassengers;
             }
         }
     }
