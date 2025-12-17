@@ -24,6 +24,7 @@ namespace Airline_Tycoon
         public List<Manager> Managers { get; private set; } = new List<Manager>();
 
         private Dictionary<AirplaneData, AirplaneItem> airplaneControls = new();
+        private Dictionary<AirplaneData, AirplaneMapItem> airplaneMapControls = new();
 
 
 
@@ -74,13 +75,13 @@ namespace Airline_Tycoon
             // ---- Ajouter les avions sur la carte ----
             foreach(var airplane in gameManager.Airplanes)
             {
-                var airplaneControl = new AirplaneItem(airplane, airplane.Id);
-                MapCanvas.Children.Add(airplaneControl);
+                var airplaneMapControl = new AirplaneMapItem(airplane.Id);
+                MapCanvas.Children.Add(airplaneMapControl);
 
-                Canvas.SetLeft(airplaneControl, airplane.CurrentAirport.Position.X);
-                Canvas.SetTop(airplaneControl, airplane.CurrentAirport.Position.Y);
+                Canvas.SetLeft(airplaneMapControl, airplane.CurrentAirport.Position.X);
+                Canvas.SetTop(airplaneMapControl, airplane.CurrentAirport.Position.Y);
 
-                airplaneControls[airplane] = airplaneControl;
+                airplaneMapControls[airplane] = airplaneMapControl; // si tu veux continuer à manipuler les avions
             }
 
             // ---- Ajouter les aéroports sur la carte ----

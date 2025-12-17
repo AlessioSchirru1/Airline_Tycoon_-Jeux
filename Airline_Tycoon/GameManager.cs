@@ -30,9 +30,9 @@ namespace Airline_Tycoon
     {
         Vector2[] positions = new Vector2[]
         {
-            new Vector2(350,420),
-            new Vector2(500,150),
-            new Vector2(300,300),
+            new Vector2(490,430),
+            new Vector2(280,450),
+            new Vector2(520,460),
             new Vector2(600,400),
             new Vector2(800,200),
             new Vector2(700,500),

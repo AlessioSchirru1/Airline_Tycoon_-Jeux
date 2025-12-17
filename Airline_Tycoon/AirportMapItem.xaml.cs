@@ -37,7 +37,9 @@ namespace Airline_Tycoon
                 return;
             }
 
-            Icon.Source = new BitmapImage(new Uri("pack://application:,,,/img/cercle.png"));
+            Icon.Source = new BitmapImage(new Uri("pack://application:,,,/img/cercle-rouge.png"));
+            Icon.Width = 25;
+            Icon.Height = 25;
             Icon.Opacity = 1.0;
         }
     }

@@ -59,6 +59,9 @@ namespace Airline_Tycoon
 
         public AirplaneData( int id, string name, AirportData startAirport, string color )
         {
+            if(id < 1)
+                throw new ArgumentException("Id doit être >= 1 pour que l'image fonctionne", nameof(id));
+
             Id = id;
             Name = name;
             CurrentAirport = startAirport;

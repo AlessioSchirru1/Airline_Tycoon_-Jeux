@@ -160,7 +160,7 @@
                                 Height="40"
                                 Background="#FFFFFF">
                             <Border.OpacityMask>
-                                <ImageBrush ImageSource="/img/avion.png" />
+                                <ImageBrush ImageSource="/img/avion1.png" />
                             </Border.OpacityMask>
                         </Border>
                     </Button>

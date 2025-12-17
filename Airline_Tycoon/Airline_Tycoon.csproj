@@ -9,7 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="img\avion.png" />
+    <None Remove="img\arplainControl.txt" />
+    <None Remove="img\avion2.png" />
+    <None Remove="img\avion3.png" />
+    <None Remove="img\avion4.png" />
+    <None Remove="img\avion5.png" />
+    <None Remove="img\avion6.png" />
     <None Remove="img\cercle-rouge.png" />
     <None Remove="img\cercle.png" />
     <None Remove="img\close.png" />
@@ -26,6 +31,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="img\arplainControl.txt" />
+    <Resource Include="img\avion2.png" />
+    <Resource Include="img\avion3.png" />
+    <Resource Include="img\avion4.png" />
+    <Resource Include="img\avion5.png" />
+    <Resource Include="img\avion6.png" />
     <Resource Include="img\cercle.png" />
     <Resource Include="img\regle.png">
       <CopyToOutputDirectory></CopyToOutputDirectory>
@@ -38,7 +49,7 @@
     <Resource Include="img\manager.png" />
     <Resource Include="img\menu-bar.png" />
     <Resource Include="img\ticket.png" />
-    <Resource Include="img\avion.png" />
+    <Resource Include="img\avion1.png" />
     <Resource Include="img\vitesse.png" />
     <Resource Include="img\wave-sound.png" />
     <Resource Include="img\world_map.jpg" />

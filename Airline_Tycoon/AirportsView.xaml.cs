@@ -111,6 +111,8 @@ namespace Airline_Tycoon
                 Image circle = new Image
                 {
                     Source = new BitmapImage(new Uri("/img/cercle-rouge.png", UriKind.Relative)),
+                    Width = 25,
+                    Height = 25,
                     Tag = airportToBuy
                 };
                 main.MapCanvas.Children.Add(circle);

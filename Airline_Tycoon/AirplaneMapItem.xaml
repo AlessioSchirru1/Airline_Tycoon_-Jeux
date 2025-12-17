@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="Airline_Tycoon.AirplaneMapItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Width="40"
+             Height="40">
+    <Grid>
+        <Image x:Name="AirplaneImage"
+               Width="40"
+               Height="40"
+               Stretch="Uniform" />
+    </Grid>
+</UserControl>

@@ -78,7 +78,24 @@ namespace Airline_Tycoon
 
             SpeedValueText.Text = airplane.Speed.ToString();
             SpeedPriceText.Text = $"${airplane.SpeedPrice}";
+
+            // --- Assignation de l'image selon l'ID ---
+            int imgIndex = (airplane.Id - 1) % 6 + 1; // boucle sur 6 images
+            string imgPath = $"pack://application:,,,/img/avion{imgIndex}.png";
+            AirplaneIcon.Source = new BitmapImage(new Uri(imgPath));
         }
+
+        //private void LoadAirplaneData()
+        //{
+        //    SeatsValueText.Text = airplane.Seats.ToString();
+        //    SeatsPriceText.Text = $"${airplane.SeatsPrice}";
+
+        //    TicketValueText.Text = airplane.Ticket.ToString();
+        //    TicketPriceText.Text = $"${airplane.AirportsPrice}";
+
+        //    SpeedValueText.Text = airplane.Speed.ToString();
+        //    SpeedPriceText.Text = $"${airplane.SpeedPrice}";
+        //}
 
         private void SeatsButton_Click( object sender, RoutedEventArgs e )
         {
