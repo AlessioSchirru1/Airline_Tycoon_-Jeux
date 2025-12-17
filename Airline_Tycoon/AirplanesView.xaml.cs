@@ -32,7 +32,9 @@ namespace Airline_Tycoon
             InitializeComponent();
             airplanes = airplaneList;
 
-            
+            airports = airportList;
+
+
 
             GenerateAirplaneViews();
 
@@ -89,6 +91,8 @@ namespace Airline_Tycoon
             AirplaneData newPlane = new AirplaneData(newId, $"Airplane {newId}", startingAirport, defaultColor);
 
             airplanes.Add(newPlane);
+
+
 
             GenerateAirplaneViews();
             UpdateButtonsState();

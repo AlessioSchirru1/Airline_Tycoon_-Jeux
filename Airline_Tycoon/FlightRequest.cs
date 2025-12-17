@@ -25,6 +25,7 @@ namespace Airline_Tycoon
 
     public class AirportData
     {
+        public bool IsOwned { get; set; } = false;
         public string CityName { get; set; }
         public Vector2 Position { get; set; }
         public List<FlightRequest> Requests { get; set; } = new List<FlightRequest>();

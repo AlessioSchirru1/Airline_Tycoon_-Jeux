@@ -17,9 +17,6 @@ using static Airline_Tycoon.Airport;
 
 namespace Airline_Tycoon
 {
-    /// <summary>
-    /// Logique d'interaction pour AirportsView.xaml
-    /// </summary>
     public partial class AirportsView :UserControl
     {
         private List<AirportData> airports;
@@ -30,18 +27,11 @@ namespace Airline_Tycoon
             InitializeComponent();
             airports = airportList;
 
-            
-
-            // Ajouter 3 aéroports de base si vide
             if(airports.Count == 0)
             {
-                //airports.Add(new AirportData { CityName = Cities[0], PurchasePrice = 0 });
-                //airports.Add(new AirportData { CityName = Cities[1], PurchasePrice = 5000 });
-                //airports.Add(new AirportData { CityName = Cities[2], PurchasePrice = 15000 });
-
-                airports.Add(new AirportData(Cities[0], new Vector2(0, 0)));
-                airports.Add(new AirportData(Cities[1], new Vector2(100, 0)));
-                airports.Add(new AirportData(Cities[2], new Vector2(200, 0)));
+                airports.Add(new AirportData(Cities[0], new Vector2(0, 0)) { IsOwned = false } );
+                airports.Add(new AirportData(Cities[1], new Vector2(100, 0)) { IsOwned = false } );
+                airports.Add(new AirportData(Cities[2], new Vector2(200, 0)) { IsOwned = false } );
             }
 
             GenerateAirportViews();
@@ -56,35 +46,20 @@ namespace Airline_Tycoon
         {
             ListContainer.Children.Clear();
 
-            //foreach(var airport in airports)
-            //{
-            //    // Créer un AirportData à partir de Airport
-            //    var data = new AirportData( airport.CityName,new Vector2(0, 0))
-            //    {
-            //        Capacity = airport.Capacity,
-            //        ArrivalSpeed = airport.ArrivalSpeed,
-            //        TicketMultiplier = (float)airport.TicketMultiplier,
-            //        CapacityUpgradePrice = (BigInteger)airport.CapacityUpgradePrice,
-            //        SpeedUpgradePrice = (BigInteger)airport.SpeedUpgradePrice,
-            //        MultiplierUpgradePrice = (BigInteger)airport.MultiplierUpgradePrice
-            //    };
-
-            //    ListContainer.Children.Add(new AirportItem(data));
-            //}
-
             foreach(var airport in airports)
             {
-                ListContainer.Children.Add(new AirportItem(airport));
+                if(airport.IsOwned)
+                {
+                    ListContainer.Children.Add(new AirportItem(airport));
+                }
             }
 
-            // Bouton d'ajout toujours en bas
             ListContainer.Children.Add(AddAirportButton);
         }
 
 
         private BigInteger GetNextAirportPrice( int index )
         {
-            // Exemple : prix qui augmente exponentiellement
             return 5000 * BigInteger.Pow(3, index - 3);
         }
 
@@ -93,21 +68,15 @@ namespace Airline_Tycoon
             var main = Application.Current.MainWindow as MainWindow;
             if(main == null) return;
 
-            int nextIndex = airports.Count;
-            int maxAirports = Cities.Count; // 7
-            bool reachedMax = airports.Count >= maxAirports;
+            var nextAirport = airports.FirstOrDefault(a => !a.IsOwned);
+            bool canBuy = nextAirport != null && main.Capital >= GetNextAirportPrice(airports.IndexOf(nextAirport));
 
-            BigInteger price = GetNextAirportPrice(nextIndex);
-
-            // On ne peut acheter que si on n'a pas atteint la limite ET si on a assez d'argent
-            bool canBuy = !reachedMax && main.Capital >= price;
-
-            // Texte du bouton et prix
             AddAirportText.Foreground = canBuy ? Brushes.White : Brushes.Black;
-            NextAirportPriceText.Foreground = reachedMax ? Brushes.Gray : ( canBuy ? Brushes.White : Brushes.Black );
-            NextAirportPriceText.Text = reachedMax ? "MAX" : $"${NumberFormatter.Format(price)}";
+            NextAirportPriceText.Foreground = canBuy ? Brushes.White : Brushes.Gray;
+            NextAirportPriceText.Text = canBuy
+                ? $"${NumberFormatter.Format(GetNextAirportPrice(airports.IndexOf(nextAirport)))}"
+                : "MAX";
 
-            // Fond du bouton
             AddAirportButton.Background = canBuy ? new SolidColorBrush(Color.FromRgb(68, 68, 68))
                                                  : new SolidColorBrush(Color.FromRgb(30, 30, 30));
             AddAirportButton.IsEnabled = canBuy;
@@ -121,26 +90,35 @@ namespace Airline_Tycoon
         private void AddAirportButton_Click( object sender, RoutedEventArgs e )
         {
             var main = Application.Current.MainWindow as MainWindow;
+            if(main == null) return;
 
-            // Limite des aéroports
-            if(airports.Count >= Cities.Count)
-                return; // on ne peut plus acheter
+            // Trouver le premier aéroport non acheté
+            var airportToBuy = airports.FirstOrDefault(a => !a.IsOwned);
+            if(airportToBuy == null) return; // tous achetés
 
-            int nextIndex = airports.Count;
-            BigInteger price = GetNextAirportPrice(nextIndex);
+            int index = airports.IndexOf(airportToBuy);
+            BigInteger price = GetNextAirportPrice(index);
 
-            if(main.Capital < price) return; // pas assez → ne fait rien
+            if(main.Capital < price) return;
 
+            // Déduire le capital
             main.Capital -= price;
+            airportToBuy.IsOwned = true;
 
-            airports.Add(new AirportData(Cities[nextIndex], new Vector2(nextIndex * 100, 0)));
+            // Ajouter le cercle sur la map
+            if(main != null)
+            {
+                Image circle = new Image
+                {
+                    Source = new BitmapImage(new Uri("/img/cercle-rouge.png", UriKind.Relative)),
+                    Tag = airportToBuy
+                };
+                main.MapCanvas.Children.Add(circle);
+                Canvas.SetLeft(circle, airportToBuy.Position.X);
+                Canvas.SetTop(circle, airportToBuy.Position.Y);
+            }
 
-            //airports.Add(new AirportData
-            //{
-            //    CityName = Cities[nextIndex],
-            //    PurchasePrice = price
-            //});
-
+            // Mettre à jour l’affichage
             GenerateAirportViews();
             UpdateButtonsState();
         }

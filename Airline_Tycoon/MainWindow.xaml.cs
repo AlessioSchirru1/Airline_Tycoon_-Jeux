@@ -83,24 +83,14 @@ namespace Airline_Tycoon
                 airplaneControls[airplane] = airplaneControl;
             }
 
-            // ---- Ajouter les aéroports ----
+            // ---- Ajouter les aéroports sur la carte ----
             foreach(var airport in gameManager.Airports)
             {
-                var airportData = new AirportData( airport.CityName, airport.Position)
-                {
-                    Capacity = airport.Capacity,
-                    ArrivalSpeed = airport.ArrivalSpeed,
-                    TicketMultiplier = (float)airport.TicketMultiplier,
-                    CapacityUpgradePrice = airport.CapacityUpgradePrice,
-                    SpeedUpgradePrice = airport.SpeedUpgradePrice,
-                    MultiplierUpgradePrice = airport.MultiplierUpgradePrice
-                };
+                var mapItem = new AirportMapItem(airport);
+                MapCanvas.Children.Add(mapItem);
 
-                var airportControl = new AirportItem(airportData);
-                MapCanvas.Children.Add(airportControl);
-
-                Canvas.SetLeft(airportControl, airportData.Position.X);
-                Canvas.SetTop(airportControl, airportData.Position.Y);
+                Canvas.SetLeft(mapItem, airport.Position.X);
+                Canvas.SetTop(mapItem, airport.Position.Y);
             }
         }
 
