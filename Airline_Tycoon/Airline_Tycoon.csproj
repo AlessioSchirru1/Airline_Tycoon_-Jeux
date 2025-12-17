@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <None Remove="img\avion.png" />
+    <None Remove="img\cercle-rouge.png" />
+    <None Remove="img\cercle.png" />
     <None Remove="img\close.png" />
     <None Remove="img\manager.png" />
     <None Remove="img\menu-bar.png" />
@@ -24,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="img\cercle.png" />
     <Resource Include="img\regle.png">
       <CopyToOutputDirectory></CopyToOutputDirectory>
     </Resource>
@@ -42,6 +45,10 @@
     <Content Include="musique\musique.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="img\cercle-rouge.png" />
   </ItemGroup>
 
   <ItemGroup>

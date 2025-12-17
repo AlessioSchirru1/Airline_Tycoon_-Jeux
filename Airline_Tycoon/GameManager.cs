@@ -24,23 +24,28 @@ namespace Airline_Tycoon
             InitializeFlightRequests();
         }
 
-        
 
-        private void InitializeAirports()
+
+    private void InitializeAirports()
+    {
+        Vector2[] positions = new Vector2[]
         {
-            // On fixe des positions fictives pour chaque ville
-            Vector2[] positions = new Vector2[]
-            {
-                new Vector2(100,100), new Vector2(500,150), new Vector2(300,300),
-                new Vector2(600,400), new Vector2(800,200), new Vector2(700,500),
-                new Vector2(900,100)
-            };
+            new Vector2(350,420),
+            new Vector2(500,150),
+            new Vector2(300,300),
+            new Vector2(600,400),
+            new Vector2(800,200),
+            new Vector2(700,500),
+            new Vector2(900,100)
+        };
 
-            for(int i = 0 ; i < airportNames.Count ; i++)
-            {
-                Airports.Add(new AirportData(airportNames[i], positions[i]));
-            }
+        for(int i = 0 ; i < airportNames.Count ; i++)
+        {
+                var airport = new AirportData(airportNames[i], positions[i]);
+                airport.IsOwned = i < 3; // Les 3 premiers aéroports sont déjà achetés
+                Airports.Add(airport);
         }
+    }
 
         private void InitializeAirplanes()
         {
@@ -91,10 +96,7 @@ namespace Airline_Tycoon
         // Retourne le trajet le plus rentable pour un avion
         public FlightRequest GetBestFlight( AirplaneData airplane )
         {
-            return airplane.CurrentAirport.Requests
-                .Where(r => r.PassengerCount > 0)
-                .OrderByDescending(r => CalculateRevenue(r, airplane))
-                .FirstOrDefault();
+            return airplane.CurrentAirport.Requests.Where(r => r.PassengerCount > 0).OrderByDescending(r => CalculateRevenue(r, airplane)).FirstOrDefault();
         }
 
         // Affiche l'état du jeu pour test console

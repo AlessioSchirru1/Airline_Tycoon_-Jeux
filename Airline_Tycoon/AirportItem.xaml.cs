@@ -73,6 +73,14 @@ namespace Airline_Tycoon
 
             SpeedValueText.Foreground = MultiplicateurButton.IsEnabled ? Brushes.White : Brushes.Black;
             SpeedPriceText.Foreground = MultiplicateurButton.IsEnabled ? Brushes.White : Brushes.Black;
+
+            if(!airport.IsOwned)
+            {
+                CapaciteButton.IsEnabled = false;
+                RemplissageButton.IsEnabled = false;
+                MultiplicateurButton.IsEnabled = false;
+                return;
+            }
         }
 
         private void CapaciteButton_Click( object sender, RoutedEventArgs e )
