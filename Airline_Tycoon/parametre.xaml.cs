@@ -35,6 +35,7 @@ namespace Airline_Tycoon
             cbVolumeson.Items.Add("30");
             cbVolumeson.Items.Add("20");
             cbVolumeson.Items.Add("10");
+            cbVolumeson.Items.Add("0");
 
             // Astuce : Sélectionner le premier élément par défaut (évite une case vide)
             cbVolumeson.SelectedIndex = 0;
