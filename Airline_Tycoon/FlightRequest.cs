@@ -15,7 +15,7 @@ namespace Airline_Tycoon
         public int PassengerCount { get; set; }
         public BigInteger BaseTicketPrice { get; set; }
 
-        public FlightRequest( AirportData destination, int passengers, BigInteger ticketPrice )
+        public FlightRequest( AirportData destination, int passengers , BigInteger ticketPrice )
         {
             Destination = destination;
             PassengerCount = passengers;
@@ -28,15 +28,23 @@ namespace Airline_Tycoon
         public bool IsOwned { get; set; } = false;
         public string CityName { get; set; }
         public Vector2 Position { get; set; }
-        public List<FlightRequest> Requests { get; set; } = new List<FlightRequest>();
+
+        //// Liste des demandes de vol (passagers vers chaque autre aéroport)
+        //public List<FlightRequest> Requests { get; set; } = new List<FlightRequest>();
+
         public int Capacity { get; set; } = 25;
         public float ArrivalSpeed { get; set; } = 1f;
+        public float CurrentPassengerSpeed { get; set; } = 1f;
         public float TicketMultiplier { get; set; } = 1.0f;
 
+        
+
+
+
         // Ajouts pour AirportItem
-        public BigInteger CapacityUpgradePrice { get; set; } = 5000;
-        public BigInteger SpeedUpgradePrice { get; set; } = 5000;
-        public BigInteger MultiplierUpgradePrice { get; set; } = 5000;
+        public BigInteger CapacityUpgradePrice { get; set; } = 100;
+        public BigInteger SpeedUpgradePrice { get; set; } = 100;
+        public BigInteger MultiplierUpgradePrice { get; set; } = 100;
 
         public AirportData( string name, Vector2 position )
         {
@@ -68,7 +76,7 @@ namespace Airline_Tycoon
         public Vector2 Position { get; set; }
         public string PlaneColor { get; set; } // couleur sous forme de string ou hex
         public int Seats { get; set; } = 10;
-        public int Ticket { get; set; } = 20;
+        public int Ticket { get; set; } = 10;
         public float Speed { get; set; } = 100f;
 
         public AirplaneData( int id, string name, AirportData startAirport, string color )
@@ -90,10 +98,10 @@ namespace Airline_Tycoon
         public BigInteger PurchasePrice { get; set; } = 0;
 
         
-        public int SeatsPrice { get; set; } = 200;
+        public int SeatsPrice { get; set; } = 100;
 
         
-        public int AirportsPrice { get; set; } = 240;
+        public int AirportsPrice { get; set; } = 100;
 
         
         public int SpeedPrice { get; set; } = 100;

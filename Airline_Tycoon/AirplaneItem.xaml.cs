@@ -24,6 +24,10 @@ namespace Airline_Tycoon
     {
         private AirplaneData airplane;
         private MainWindow main;
+        private int niveauSeats = 1;
+        private int niveauTicket = 1;
+        private int niveauSpeed = 1;
+        private double multiplicateurPrix = 1.25;
 
         public AirplaneItem( AirplaneData airplaneModel , int index)
         {
@@ -91,8 +95,10 @@ namespace Airline_Tycoon
                 return;
 
             main.Capital -= airplane.SeatsPrice;
-            airplane.Seats++;
-            airplane.SeatsPrice += 20;
+            airplane.Seats+=2;
+            niveauSeats++;
+            airplane.SeatsPrice = (int)ArrondiDynamique(PrixNiveau(niveauSeats, 100));
+            
 
             LoadAirplaneData();
             UpdateButtons();
@@ -106,8 +112,10 @@ namespace Airline_Tycoon
                 return;
 
             main.Capital -= airplane.AirportsPrice;
-            airplane.Ticket++;
-            airplane.AirportsPrice += 20;
+            airplane.Ticket+=2;
+            niveauTicket++;
+            airplane.AirportsPrice = (int)ArrondiDynamique(PrixNiveau(niveauTicket, 100));
+            
 
             LoadAirplaneData();
             UpdateButtons();
@@ -121,8 +129,10 @@ namespace Airline_Tycoon
                 return;
 
             main.Capital -= airplane.SpeedPrice;
-            airplane.Speed++;
-            airplane.SpeedPrice += 20;
+            airplane.Speed+=10;
+            niveauSpeed++;
+            airplane.SpeedPrice = (int)ArrondiDynamique(PrixNiveau(niveauSpeed, 100));
+            
 
             LoadAirplaneData();
             UpdateButtons();
@@ -133,6 +143,28 @@ namespace Airline_Tycoon
         public void SetTitle( string title )
         {
             TitleText.Text = title;
+        }
+
+        private double ArrondiDynamique( double nombre )
+        {
+            if(nombre < 1000)
+                return Math.Round(nombre / 10.0) * 10;
+            else if(nombre < 10000)
+                return Math.Round(nombre / 100.0) * 100;
+            else if(nombre < 100000)
+                return Math.Round(nombre / 1000.0) * 1000;
+            else if(nombre < 1000000)
+                return Math.Round(nombre / 10000.0) * 10000;
+            else
+            {
+                double facteur = Math.Pow(10, Math.Floor(Math.Log10(nombre)) - 1);
+                return Math.Round(nombre / facteur) * facteur;
+            }
+        }
+
+        private double PrixNiveau( int niveau, double prixDepart )
+        {
+            return prixDepart * Math.Pow(multiplicateurPrix, niveau - 1);
         }
     }
 }

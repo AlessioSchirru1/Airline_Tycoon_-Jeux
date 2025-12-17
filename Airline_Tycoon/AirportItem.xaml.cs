@@ -24,6 +24,10 @@ namespace Airline_Tycoon
     {
         private AirportData airport;
         private MainWindow main;
+        private int niveauCapacite = 1;
+        private int niveauRemplissage = 1;
+        private int niveauMultiplicateur = 1;
+        private double multiplicateurPrix = 1.25;
 
         public AirportItem( AirportData airportModel )
         {
@@ -90,7 +94,9 @@ namespace Airline_Tycoon
             main.Capital -= airport.CapacityUpgradePrice;
             airport.Capacity += 25;
             airport.MaxPassengers = airport.Capacity;
-            airport.CapacityUpgradePrice += 5000;
+            niveauCapacite++;
+            airport.CapacityUpgradePrice = (int)ArrondiDynamique(PrixNiveau(niveauCapacite, 100));
+            
 
             LoadAirportData();
             UpdateButtons();
@@ -102,7 +108,13 @@ namespace Airline_Tycoon
 
             main.Capital -= airport.SpeedUpgradePrice;
             airport.ArrivalSpeed += 1;
-            airport.SpeedUpgradePrice += 5000;
+            airport.CurrentPassengerSpeed = airport.ArrivalSpeed/2;
+
+            niveauRemplissage++;
+            airport.SpeedUpgradePrice = (int)ArrondiDynamique(PrixNiveau(niveauRemplissage, 100));
+            
+
+            GeneratePassengers(1f);
 
             LoadAirportData();
             UpdateButtons();
@@ -114,7 +126,8 @@ namespace Airline_Tycoon
 
             main.Capital -= airport.MultiplierUpgradePrice;
             airport.TicketMultiplier += 0.1f;
-            airport.MultiplierUpgradePrice += 5000;
+            niveauMultiplicateur++;
+            airport.MultiplierUpgradePrice = (int)ArrondiDynamique(PrixNiveau(niveauMultiplicateur, 100));
 
             LoadAirportData();
             UpdateButtons();
@@ -127,33 +140,121 @@ namespace Airline_Tycoon
             PassengersText.Text = $"{airport.Passengers}/{airport.MaxPassengers}";
         }
 
+
+
         public void UpdatePassengers( float deltaSeconds )
         {
             if(!airport.IsOwned) return;
 
-            airport.Passengers += (int)( airport.PassengerGenerationRate * deltaSeconds );
+            // Génération de passagers simple
+            int newPassengers = (int)(airport.ArrivalSpeed * deltaSeconds);
+            airport.Passengers += newPassengers;
+
+            // Ne pas dépasser le maximum
             if(airport.Passengers > airport.MaxPassengers)
                 airport.Passengers = airport.MaxPassengers;
 
-            // Mettre à jour le texte
+            // Affichage
             PassengersText.Text = $"{airport.Passengers}/{airport.MaxPassengers}";
         }
+
+        //public void UpdatePassengers( float deltaSeconds )
+        //{
+        //    if(!airport.IsOwned) return;
+
+        //    // Génération de passagers simple
+        //    int newPassengers = (int)(airport.ArrivalSpeed * deltaSeconds);
+        //    airport.Passengers += newPassengers;
+
+        //    if(airport.Passengers > airport.MaxPassengers)
+        //        airport.Passengers = airport.MaxPassengers;
+
+        //    // Affichage
+        //    PassengersText.Text = $"{airport.Passengers}/{airport.MaxPassengers}";
+        //}
+
+        //public void UpdatePassengers( float deltaSeconds )
+        //{
+        //    if(!airport.IsOwned) return;
+
+        //    // Génération de passagers total
+        //    int newPassengers = (int)(airport.CurrentPassengerSpeed * deltaSeconds);
+        //    airport.Passengers += newPassengers;
+
+        //    if(airport.Passengers > airport.MaxPassengers)
+        //        airport.Passengers = airport.MaxPassengers;
+
+        //    // Répartition des nouveaux passagers vers les destinations
+        //    if(airport.Requests.Count > 0)
+        //    {
+        //        // Exemple simple : répartir équitablement
+        //        int perAirport = newPassengers / airport.Requests.Count;
+        //        foreach(var request in airport.Requests)
+        //        {
+        //            request.PassengerCount += perAirport;
+        //        }
+
+        //        // On met le reste sur le premier aéroport
+        //        int reste = newPassengers % airport.Requests.Count;
+        //        if(reste > 0)
+        //            airport.Requests[0].PassengerCount += reste;
+        //    }
+
+        //    PassengersText.Text = $"{airport.Passengers}/{airport.MaxPassengers}"; // juste pour info
+        //}
 
         public void GeneratePassengers( float deltaSeconds )
         {
             if(!airport.IsOwned) return;
 
-            // Multiplie la vitesse d’arrivée par le delta de temps pour gérer le tick
-            int newPassengers = (int)(airport.ArrivalSpeed * deltaSeconds);
+            // Chaque tick ajoute un nombre entier de passagers égal à la vitesse
+            int passengersToAdd = (int)airport.ArrivalSpeed;
 
-            airport.Passengers += newPassengers;
+            airport.Passengers += passengersToAdd;
 
-            // Ne dépasse pas le max
             if(airport.Passengers > airport.MaxPassengers)
                 airport.Passengers = airport.MaxPassengers;
 
-            // Met à jour le texte
             PassengersText.Text = $"{airport.Passengers}/{airport.MaxPassengers}";
+        }
+
+        //public void GeneratePassengers( float deltaSeconds )
+        //{
+        //    if(!airport.IsOwned) return;
+
+
+        //    int newPassengers = (int)(airport.ArrivalSpeed * deltaSeconds);
+
+        //    airport.Passengers += newPassengers;
+
+        //    // Ne dépasse pas le max
+        //    if(airport.Passengers > airport.MaxPassengers)
+        //        airport.Passengers = airport.MaxPassengers;
+
+        //    // Met à jour le texte
+        //    PassengersText.Text = $"{airport.Passengers}/{airport.MaxPassengers}";
+        //}
+
+        private double ArrondiDynamique( double nombre )
+        {
+            if(nombre < 1000)
+                return Math.Round(nombre / 10.0) * 10;
+            else if(nombre < 10000)
+                return Math.Round(nombre / 100.0) * 100;
+            else if(nombre < 100000)
+                return Math.Round(nombre / 1000.0) * 1000;
+            else if(nombre < 1000000)
+                return Math.Round(nombre / 10000.0) * 10000;
+            else
+            {
+                double facteur = Math.Pow(10, Math.Floor(Math.Log10(nombre)) - 1);
+                return Math.Round(nombre / facteur) * facteur;
+            }
+        }
+
+        private double PrixNiveau( int niveau, double prixDepart )
+        {
+            return prixDepart * Math.Pow(multiplicateurPrix, niveau - 1);
         }
     }
 }

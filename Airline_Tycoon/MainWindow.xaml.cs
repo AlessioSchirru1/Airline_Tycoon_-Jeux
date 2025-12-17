@@ -33,7 +33,7 @@ namespace Airline_Tycoon
         private AirplanesView currentAirplanesView;
         private ManagerView currentManagerView;
 
-
+        
         // Références uniques aux panneaux
         private AirplanesView airplanesView;
         private AirportsView airportsView;
@@ -149,7 +149,7 @@ namespace Airline_Tycoon
 
         private void AddMoney_Click( object sender, RoutedEventArgs e )
         {
-            Capital += BigInteger.Parse("100000000000000");
+            Capital += BigInteger.Parse("1000000000");
             UpdateCapitalDisplay();
         }
 
@@ -290,7 +290,7 @@ namespace Airline_Tycoon
             airplanesView.RefreshAll();
             airportsView.RefreshAll(); // pour les passagers
 
-            // 🔁 Capital (au cas où il change sans clic)
+            // Capital (au cas où il change sans clic)
             UpdateCapitalDisplay();
         }
     }
